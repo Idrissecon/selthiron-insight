@@ -101,12 +101,6 @@ const Tool = () => {
 
       if (recError) throw recError;
 
-      // Link files to reconciliation
-      await supabase
-        .from('files')
-        .update({ reconciliation_id: null })
-        .in('id', [bankFileData.id, providerFileData.id]);
-
       navigate("/results", { state: { report } });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
