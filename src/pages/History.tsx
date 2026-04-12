@@ -101,20 +101,20 @@ const History = () => {
                 <div className="flex items-center justify-between mb-4">
                   <div className="flex items-center gap-3">
                     <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-                      rec.matchRate >= 80 ? 'bg-success/10 text-success' :
-                      rec.matchRate >= 50 ? 'bg-warning/10 text-warning' :
+                      rec.match_rate >= 80 ? 'bg-success/10 text-success' :
+                      rec.match_rate >= 50 ? 'bg-warning/10 text-warning' :
                       'bg-destructive/10 text-destructive'
                     }`}>
-                      {rec.matchRate >= 80 ? <CheckCircle2 className="w-5 h-5" /> :
-                       rec.matchRate >= 50 ? <AlertTriangle className="w-5 h-5" /> :
+                      {rec.match_rate >= 80 ? <CheckCircle2 className="w-5 h-5" /> :
+                       rec.match_rate >= 50 ? <AlertTriangle className="w-5 h-5" /> :
                        <AlertTriangle className="w-5 h-5" />}
                     </div>
                     <div>
                       <p className="font-medium">
-                        {new Date(rec.createdAt).toLocaleDateString()} at {new Date(rec.createdAt).toLocaleTimeString()}
+                        {new Date(rec.created_at).toLocaleDateString()} at {new Date(rec.created_at).toLocaleTimeString()}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {rec.files.length} files
+                        {rec.files?.length || 0} files
                       </p>
                     </div>
                   </div>
@@ -132,24 +132,24 @@ const History = () => {
                   <div>
                     <p className="text-muted-foreground text-xs">Match Rate</p>
                     <p className={`font-semibold ${
-                      rec.matchRate >= 80 ? 'text-success' :
-                      rec.matchRate >= 50 ? 'text-warning' :
+                      rec.match_rate >= 80 ? 'text-success' :
+                      rec.match_rate >= 50 ? 'text-warning' :
                       'text-destructive'
                     }`}>
-                      {rec.matchRate.toFixed(0)}%
+                      {rec.match_rate?.toFixed(0) || 0}%
                     </p>
                   </div>
                   <div>
                     <p className="text-muted-foreground text-xs">Matched</p>
-                    <p className="font-semibold">{rec.matched}</p>
+                    <p className="font-semibold">{rec.matched || 0}</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground text-xs">Unmatched</p>
-                    <p className="font-semibold text-destructive">{rec.unmatched}</p>
+                    <p className="font-semibold text-destructive">{rec.unmatched || 0}</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground text-xs">Discrepancies</p>
-                    <p className="font-semibold text-warning">{rec.discrepancies}</p>
+                    <p className="font-semibold text-warning">{rec.discrepancies || 0}</p>
                   </div>
                 </div>
               </div>
