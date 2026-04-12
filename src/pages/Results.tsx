@@ -77,12 +77,12 @@ const Results = () => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           <SummaryCard
             label="Match Rate"
-            value={`${report.matchRate.toFixed(0)}%`}
+            value={`${report.matchRate?.toFixed(0) || 0}%`}
             className="text-success"
           />
-          <SummaryCard label="Matched" value={report.matched} className="text-success" />
-          <SummaryCard label="Unmatched" value={report.unmatched} className="text-destructive" />
-          <SummaryCard label="Discrepancies" value={report.discrepancies} className="text-warning" />
+          <SummaryCard label="Matched" value={report.matched || 0} className="text-success" />
+          <SummaryCard label="Unmatched" value={report.unmatched || 0} className="text-destructive" />
+          <SummaryCard label="Discrepancies" value={report.discrepancies || 0} className="text-warning" />
         </div>
 
         {/* Results Table */}
