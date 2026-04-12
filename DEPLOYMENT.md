@@ -1,192 +1,120 @@
-# Deployment Guide
+# Deployment Guide - Supabase + Vercel
 
-## Backend Deployment (Fly.io - Free Tier)
+This guide explains how to deploy Selthiron Insights using Supabase (free tier) and Vercel (free tier).
 
-### Prerequisites
-- Fly.io account (free tier available, requires credit card for verification only)
+## Prerequisites
+- Supabase account (free tier available)
+- Vercel account (free tier available)
 - GitHub repository with your code
-- Fly.io CLI installed: `brew install flyctl` (Mac) or visit fly.io/docs
 
-### Steps
+## Step 1: Set up Supabase
 
-1. **Push code to GitHub**
-   ```bash
-   git add .
-   git commit -m "Configure for Fly.io deployment"
-   git push origin main
-   ```
+1. **Create Supabase Project**
+   - Go to [supabase.com](https://supabase.com)
+   - Click "New Project"
+   - Name: `selthiron-insights`
+   - Database password: generate a strong password
+   - Region: choose closest to your users
+   - Click "Create new project"
+   - Wait for project to be ready (2-3 minutes)
 
-2. **Install Fly.io CLI**
-   ```bash
-   brew install flyctl  # Mac
-   # Or visit https://fly.io/docs/hands-on/install-flyctl/
-   ```
+2. **Run Database Schema**
+   - In Supabase dashboard, go to SQL Editor
+   - Click "New Query"
+   - Copy the contents of `supabase/schema.sql`
+   - Paste and run the SQL script
+   - This creates the tables and RLS policies
 
-3. **Login to Fly.io**
-   ```bash
-   flyctl auth login
-   ```
+3. **Get Supabase Credentials**
+   - In Supabase dashboard → Settings → API
+   - Copy `Project URL` (this is `VITE_SUPABASE_URL`)
+   - Copy `anon public` key (this is `VITE_SUPABASE_ANON_KEY`)
 
-4. **Create PostgreSQL Database on Fly.io**
-   ```bash
-   cd server
-   flyctl postgres create --name selthiron-db
-   ```
-   - Copy the `DATABASE_URL` provided
-   - Select a region (closest to you)
+## Step 2: Deploy Frontend to Vercel
 
-5. **Configure Fly.io for Backend**
-   ```bash
-   flyctl launch
-   ```
-   - App name: `selthiron-backend`
-   - Region: same as your database
-   - Select "No" for deploying now
-   - Select "No" for PostgreSQL (already created)
-
-6. **Update fly.toml**
-   Open `server/fly.toml` and update:
-   ```toml
-   [build]
-     dockerfile = "Dockerfile"
-
-   [env]
-     PORT = "3001"
-     DATABASE_URL = "your-database-url-here"
-     JWT_SECRET = "your-jwt-secret-here"
-   ```
-
-7. **Create Dockerfile**
-   The Dockerfile has been created in `server/Dockerfile` with the following content:
-   ```dockerfile
-   FROM node:18-alpine
-
-   WORKDIR /app
-
-   COPY package*.json ./
-   RUN npm install
-
-   COPY . .
-   RUN npm run build
-
-   RUN npx prisma generate
-
-   EXPOSE 3001
-
-   CMD ["npm", "start"]
-   ```
-
-8. **Deploy to Fly.io**
-   ```bash
-   flyctl deploy
-   ```
-
-9. **Run Database Migrations**
-   ```bash
-   flyctl ssh console --app selthiron-backend
-   # In the SSH console:
-   npx prisma migrate deploy
-   exit
-   ```
-
-10. **Get Backend URL**
-    - Fly.io provides a URL like `https://selthiron-backend.fly.dev`
-    - Note this URL for frontend configuration
-
-## Frontend Deployment (Vercel)
-
-### Steps
-
-1. **Deploy Frontend to Vercel**
+1. **Deploy to Vercel**
    - Go to [vercel.com](https://vercel.com)
-   - Click "New Project" → Import your repository
-   - Select the root directory (exclude `server` folder)
+   - Click "New Project" → Import from GitHub
+   - Select your repository `selthiron-insight`
+   - Click "Deploy"
 
-2. **Set Environment Variable**
-   - In Vercel project settings → Environment Variables
-   - Add `VITE_API_URL` = your Railway backend URL
-   - Example: `https://your-backend.railway.app/api`
+2. **Add Environment Variables**
+   - In Vercel project → Settings → Environment Variables
+   - Add:
+     - `VITE_SUPABASE_URL` = your Supabase project URL
+     - `VITE_SUPABASE_ANON_KEY` = your Supabase anon key
+   - Click "Save"
+   - Redeploy the project (Settings → Deployments → Redeploy)
 
-3. **Deploy**
-   - Vercel will automatically build and deploy
-   - You'll get a URL like `https://your-app.vercel.app`
+3. **Access Your App**
+   - Vercel will provide a URL like `https://selthiron-insight.vercel.app`
+   - Your app is now live and accessible to users
 
-## Local Development with PostgreSQL
+## Step 3: Verify Deployment
 
-### Using Docker (Recommended)
+1. **Test Authentication**
+   - Open your Vercel URL
+   - Try signing up a new account
+   - Verify you can log in
+   - Check Supabase dashboard → Authentication → Users to see the user
 
-```bash
-# Start PostgreSQL container
-docker run --name selthiron-postgres \
-  -e POSTGRES_PASSWORD=postgres \
-  -e POSTGRES_DB=selthiron \
-  -p 5432:5432 \
-  -d postgres
+2. **Test File Upload**
+   - Upload CSV files
+   - Verify reconciliation works
+   - Check Supabase dashboard → Table Editor → files and reconciliations tables
 
-# Update .env in server folder
-DATABASE_URL="postgresql://postgres:postgres@localhost:5432/selthiron"
+3. **Test History**
+   - Navigate to History page
+   - Verify you can see previous reconciliations
+   - Check Supabase dashboard → Table Editor → reconciliations
 
-# Run migrations
-cd server
-npx prisma migrate dev
-npx prisma generate
-npm run dev
-```
+## Viewing Data in Supabase
 
-### Using Local PostgreSQL
+Supabase provides a built-in dashboard to view your data:
 
-If you have PostgreSQL installed locally:
+1. **Table Editor**
+   - Go to Supabase dashboard → Table Editor
+   - View/edit data in `profiles`, `files`, and `reconciliations` tables
+   - Similar to Prisma Studio but in the browser
 
-```bash
-# Create database
-createdb selthiron
+2. **SQL Editor**
+   - Run custom SQL queries
+   - Debug data issues
+   - Export data
 
-# Update .env
-DATABASE_URL="postgresql://user:password@localhost:5432/selthiron"
+3. **Authentication Dashboard**
+   - View all users
+   - Manage user sessions
+   - Reset passwords
 
-# Run migrations
-cd server
-npx prisma migrate dev
-npx prisma generate
-npm run dev
-```
+## Benefits of This Setup
 
-## Migration from SQLite to PostgreSQL
-
-If you have existing data in SQLite:
-
-```bash
-# Export SQLite data
-cd server
-npx prisma db pull
-npx prisma db push --skip-generate
-
-# Or use a migration tool like pgloader
-# This is more complex and requires manual setup
-```
-
-## Important Notes
-
-- **Prisma Studio** is for development only - not available in production
-- To view production data, use Railway's PostgreSQL console or pgAdmin
-- Railway provides a built-in PostgreSQL viewer in their dashboard
-- Always use strong JWT secrets in production
-- Railway free tier includes PostgreSQL with 1GB storage
-- Vercel free tier includes SSL and automatic HTTPS
+- **Completely Free**: Both Supabase and Vercel have generous free tiers
+- **Dashboard Visual**: Supabase provides a visual dashboard to view data
+- **No Backend Server**: No need to manage Express server
+- **Automatic Scaling**: Vercel handles scaling automatically
+- **SSL Included**: HTTPS enabled by default
+- **Easy Updates**: Push to GitHub → Vercel auto-deploys
 
 ## Troubleshooting
 
-### Backend fails to start
-- Check Railway logs for errors
-- Ensure DATABASE_URL is set correctly
-- Verify migrations ran successfully
+### Authentication not working
+- Verify `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` are correct in Vercel
+- Check Supabase dashboard → Authentication → Users
+- Ensure email confirmation is disabled in Supabase settings (for testing)
 
-### Frontend can't connect to backend
-- Check VITE_API_URL is set correctly in Vercel
-- Verify backend is running and accessible
-- Check CORS configuration in backend
+### File upload failing
+- Check Supabase dashboard → Table Editor → files table
+- Verify RLS policies are set correctly
+- Check browser console for errors
 
-### Database connection issues
-- Verify DATABASE_URL format
-- Check PostgreSQL is running
-- Ensure database exists
+### History page empty
+- Verify data exists in Supabase → Table Editor → reconciliations
+- Check that `user_id` matches the logged-in user
+- Verify RLS policies allow users to see their own data
+
+### Can't see data in Supabase
+- Go to Supabase dashboard → Table Editor
+- Select the table you want to view
+- Data should be visible there
+

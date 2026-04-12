@@ -5,11 +5,11 @@ import { Upload, FileText, ArrowRight, Shield, Loader2, LogOut, Clock } from "lu
 import logo from "@/assets/selthiron-logo.png";
 import { parseTransactions, reconcile, type ReconciliationReport } from "@/lib/reconciliation";
 import { useAuth } from "@/contexts/AuthContext";
-import { api } from "@/lib/api";
+import { supabase } from "@/lib/supabase";
 
 const Tool = () => {
   const navigate = useNavigate();
-  const { user, token, logout, isAuthenticated } = useAuth();
+  const { user, logout, isAuthenticated } = useAuth();
   const [bankFile, setBankFile] = useState<File | null>(null);
   const [providerFile, setProviderFile] = useState<File | null>(null);
   const [processing, setProcessing] = useState(false);
@@ -36,20 +36,45 @@ const Tool = () => {
   };
 
   const handleReconcile = async () => {
-    if (!bankFile || !providerFile || !token) return;
+    if (!bankFile || !providerFile || !user) return;
     setProcessing(true);
     setError("");
 
     try {
-      // Upload files to backend
-      const { bankFileId, providerFileId } = await api.uploadFiles(token, bankFile, providerFile);
-
-      // Process locally for results display
+      // Upload files to Supabase Storage
       const [bankText, providerText] = await Promise.all([
         bankFile.text(),
         providerFile.text(),
       ]);
 
+      // Save files to database
+      const { data: bankFileData, error: bankError } = await supabase
+        .from('files')
+        .insert({
+          filename: bankFile.name,
+          type: 'bank',
+          content: bankText,
+          user_id: user.id,
+        })
+        .select()
+        .single();
+
+      if (bankError) throw bankError;
+
+      const { data: providerFileData, error: providerError } = await supabase
+        .from('files')
+        .insert({
+          filename: providerFile.name,
+          type: 'provider',
+          content: providerText,
+          user_id: user.id,
+        })
+        .select()
+        .single();
+
+      if (providerError) throw providerError;
+
+      // Process locally for results display
       const bankTxs = parseTransactions(bankText);
       const providerTxs = parseTransactions(providerText);
 
@@ -58,8 +83,29 @@ const Tool = () => {
 
       const report = reconcile(bankTxs, providerTxs);
 
-      // Save reconciliation results to backend
-      await api.saveReconciliation(token, report, bankFileId, providerFileId);
+      // Save reconciliation results to database
+      const { error: recError } = await supabase
+        .from('reconciliations')
+        .insert({
+          total_bank: report.totalBank,
+          total_provider: report.totalProvider,
+          matched: report.matched,
+          unmatched: report.unmatched,
+          discrepancies: report.discrepancies,
+          match_rate: report.matchRate,
+          reconcilable_bank: report.reconcilableBank,
+          reconcilable_provider: report.reconcilableProvider,
+          results: report.results,
+          user_id: user.id,
+        });
+
+      if (recError) throw recError;
+
+      // Link files to reconciliation
+      await supabase
+        .from('files')
+        .update({ reconciliation_id: null })
+        .in('id', [bankFileData.id, providerFileData.id]);
 
       navigate("/results", { state: { report } });
     } catch (err) {

@@ -4,27 +4,36 @@ import { Button } from "@/components/ui/button";
 import { Clock, CheckCircle2, AlertTriangle, ArrowLeft, Eye } from "lucide-react";
 import logo from "@/assets/selthiron-logo.png";
 import { useAuth } from "@/contexts/AuthContext";
-import { api } from "@/lib/api";
+import { supabase } from "@/lib/supabase";
 
 const History = () => {
   const navigate = useNavigate();
-  const { token } = useAuth();
+  const { user } = useAuth();
   const [reconciliations, setReconciliations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (!token) {
+    if (!user) {
       navigate("/access");
       return;
     }
 
     loadHistory();
-  }, [token, navigate]);
+  }, [user, navigate]);
 
   const loadHistory = async () => {
     try {
-      const data = await api.getReconciliationHistory(token!);
-      setReconciliations(data);
+      const { data, error } = await supabase
+        .from('reconciliations')
+        .select(`
+          *,
+          files (*)
+        `)
+        .eq('user_id', user.id)
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setReconciliations(data || []);
     } catch (error) {
       console.error("Failed to load history:", error);
     } finally {
@@ -34,7 +43,13 @@ const History = () => {
 
   const viewReconciliation = async (id: string) => {
     try {
-      const data = await api.getReconciliation(token!, id);
+      const { data, error } = await supabase
+        .from('reconciliations')
+        .select('*')
+        .eq('id', id)
+        .single();
+
+      if (error) throw error;
       navigate("/results", { state: { report: data } });
     } catch (error) {
       console.error("Failed to load reconciliation:", error);
