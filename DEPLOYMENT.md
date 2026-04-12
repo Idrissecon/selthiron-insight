@@ -1,52 +1,97 @@
 # Deployment Guide
 
-## Backend Deployment (Render - Free Tier)
+## Backend Deployment (Fly.io - Free Tier)
 
 ### Prerequisites
-- Render account (free tier available)
+- Fly.io account (free tier available, requires credit card for verification only)
 - GitHub repository with your code
+- Fly.io CLI installed: `brew install flyctl` (Mac) or visit fly.io/docs
 
 ### Steps
 
 1. **Push code to GitHub**
    ```bash
    git add .
-   git commit -m "Configure for Render deployment"
+   git commit -m "Configure for Fly.io deployment"
    git push origin main
    ```
 
-2. **Create PostgreSQL Database on Render**
-   - Go to [render.com](https://render.com)
-   - Click "New" → "PostgreSQL"
-   - Name: `selthiron-db`
-   - Select Free tier
-   - Click "Create Database"
-   - Copy the `DATABASE_URL` from the dashboard
+2. **Install Fly.io CLI**
+   ```bash
+   brew install flyctl  # Mac
+   # Or visit https://fly.io/docs/hands-on/install-flyctl/
+   ```
 
-3. **Deploy Backend to Render**
-   - Go to [render.com](https://render.com)
-   - Click "New" → "Web Service"
-   - Connect your GitHub account
-   - Select your repository
-   - Select the `server` folder as root directory
-   - Name: `selthiron-backend`
-   - Runtime: `Node`
-   - Build Command: `npm install && npm run build`
-   - Start Command: `npm start`
+3. **Login to Fly.io**
+   ```bash
+   flyctl auth login
+   ```
 
-4. **Set Environment Variables**
-   - In Render web service settings → Environment
-   - Add `DATABASE_URL` (from your PostgreSQL database)
-   - Add `JWT_SECRET` (use a strong random string: https://generate-random.org/api-key)
-   - Add `PORT` = `3001`
+4. **Create PostgreSQL Database on Fly.io**
+   ```bash
+   cd server
+   flyctl postgres create --name selthiron-db
+   ```
+   - Copy the `DATABASE_URL` provided
+   - Select a region (closest to you)
 
-5. **Run Database Migrations**
-   - In Render web service settings → Advanced → Pre-deploy command
-   - Add: `npx prisma migrate deploy`
+5. **Configure Fly.io for Backend**
+   ```bash
+   flyctl launch
+   ```
+   - App name: `selthiron-backend`
+   - Region: same as your database
+   - Select "No" for deploying now
+   - Select "No" for PostgreSQL (already created)
 
-6. **Get Backend URL**
-   - Render will provide a URL like `https://selthiron-backend.onrender.com`
-   - Note this URL for frontend configuration
+6. **Update fly.toml**
+   Open `server/fly.toml` and update:
+   ```toml
+   [build]
+     dockerfile = "Dockerfile"
+
+   [env]
+     PORT = "3001"
+     DATABASE_URL = "your-database-url-here"
+     JWT_SECRET = "your-jwt-secret-here"
+   ```
+
+7. **Create Dockerfile**
+   The Dockerfile has been created in `server/Dockerfile` with the following content:
+   ```dockerfile
+   FROM node:18-alpine
+
+   WORKDIR /app
+
+   COPY package*.json ./
+   RUN npm install
+
+   COPY . .
+   RUN npm run build
+
+   RUN npx prisma generate
+
+   EXPOSE 3001
+
+   CMD ["npm", "start"]
+   ```
+
+8. **Deploy to Fly.io**
+   ```bash
+   flyctl deploy
+   ```
+
+9. **Run Database Migrations**
+   ```bash
+   flyctl ssh console --app selthiron-backend
+   # In the SSH console:
+   npx prisma migrate deploy
+   exit
+   ```
+
+10. **Get Backend URL**
+    - Fly.io provides a URL like `https://selthiron-backend.fly.dev`
+    - Note this URL for frontend configuration
 
 ## Frontend Deployment (Vercel)
 
