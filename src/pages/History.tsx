@@ -35,7 +35,8 @@ const History = () => {
       if (error) throw error;
       setReconciliations(data || []);
     } catch (error) {
-      console.error("Failed to load history:", error);
+      // Silently fail - empty state will be shown
+      setReconciliations([]);
     } finally {
       setLoading(false);
     }
@@ -52,7 +53,7 @@ const History = () => {
       if (error) throw error;
       navigate("/results", { state: { report: data } });
     } catch (error) {
-      console.error("Failed to load reconciliation:", error);
+      // Silently fail - user can try again
     }
   };
 

@@ -103,7 +103,7 @@ const Results = () => {
 
         <div className="mt-8 text-center">
           <p className="text-xs text-muted-foreground">
-            All data has been processed in your browser and is not stored anywhere.
+            This reconciliation has been saved to your account history.
           </p>
         </div>
       </div>
