@@ -10,18 +10,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
 
--- Files table
-CREATE TABLE IF NOT EXISTS public.files (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
-  filename TEXT NOT NULL,
-  type TEXT NOT NULL CHECK (type IN ('bank', 'provider')),
-  content TEXT NOT NULL,
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  reconciliation_id UUID REFERENCES public.reconciliations(id) ON DELETE SET NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
-);
-
--- Reconciliations table
+-- Reconciliations table (created before files to avoid foreign key dependency)
 CREATE TABLE IF NOT EXISTS public.reconciliations (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   total_bank INTEGER NOT NULL,
@@ -34,6 +23,17 @@ CREATE TABLE IF NOT EXISTS public.reconciliations (
   reconcilable_provider INTEGER NOT NULL,
   results JSONB NOT NULL,
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
+);
+
+-- Files table
+CREATE TABLE IF NOT EXISTS public.files (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  filename TEXT NOT NULL,
+  type TEXT NOT NULL CHECK (type IN ('bank', 'provider')),
+  content TEXT NOT NULL,
+  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  reconciliation_id UUID REFERENCES public.reconciliations(id) ON DELETE SET NULL,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
 
