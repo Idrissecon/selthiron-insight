@@ -1,9 +1,9 @@
 # Deployment Guide
 
-## Backend Deployment (Railway)
+## Backend Deployment (Render - Free Tier)
 
 ### Prerequisites
-- Railway account (free tier available)
+- Render account (free tier available)
 - GitHub repository with your code
 
 ### Steps
@@ -11,35 +11,41 @@
 1. **Push code to GitHub**
    ```bash
    git add .
-   git commit -m "Configure for Railway deployment"
+   git commit -m "Configure for Render deployment"
    git push origin main
    ```
 
-2. **Deploy Backend to Railway**
-   - Go to [railway.app](https://railway.app)
-   - Click "New Project" → "Deploy from GitHub repo"
+2. **Create PostgreSQL Database on Render**
+   - Go to [render.com](https://render.com)
+   - Click "New" → "PostgreSQL"
+   - Name: `selthiron-db`
+   - Select Free tier
+   - Click "Create Database"
+   - Copy the `DATABASE_URL` from the dashboard
+
+3. **Deploy Backend to Render**
+   - Go to [render.com](https://render.com)
+   - Click "New" → "Web Service"
+   - Connect your GitHub account
    - Select your repository
    - Select the `server` folder as root directory
-   - Railway will automatically detect Node.js
-
-3. **Configure PostgreSQL Database**
-   - In Railway project, click "New Service" → "Database" → "PostgreSQL"
-   - Railway will provide `DATABASE_URL` environment variable
+   - Name: `selthiron-backend`
+   - Runtime: `Node`
+   - Build Command: `npm install && npm run build`
+   - Start Command: `npm start`
 
 4. **Set Environment Variables**
-   - Add `JWT_SECRET` (use a strong random string)
-   - Railway automatically provides `DATABASE_URL`
-   - Port defaults to 3001
+   - In Render web service settings → Environment
+   - Add `DATABASE_URL` (from your PostgreSQL database)
+   - Add `JWT_SECRET` (use a strong random string: https://generate-random.org/api-key)
+   - Add `PORT` = `3001`
 
 5. **Run Database Migrations**
-   - In Railway console, run:
-   ```bash
-   npx prisma migrate deploy
-   ```
-   - Or add as a deployment hook in Railway settings
+   - In Render web service settings → Advanced → Pre-deploy command
+   - Add: `npx prisma migrate deploy`
 
 6. **Get Backend URL**
-   - Railway will provide a URL like `https://your-app.railway.app`
+   - Render will provide a URL like `https://selthiron-backend.onrender.com`
    - Note this URL for frontend configuration
 
 ## Frontend Deployment (Vercel)
