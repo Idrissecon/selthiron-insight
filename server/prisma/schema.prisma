@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id              String           @id @default(uuid())
+  email           String           @unique
+  password        String
+  name            String?
+  createdAt       DateTime         @default(now())
+  updatedAt       DateTime         @updatedAt
+  files           File[]
+  reconciliations Reconciliation[]
+}
+
+model File {
+  id              String         @id @default(uuid())
+  filename        String
+  type            String // 'bank' or 'provider'
+  content         String
+  userId          String
+  user            User           @relation(fields: [userId], references: [id])
+  reconciliation  Reconciliation? @relation(fields: [reconciliationId], references: [id])
+  reconciliationId String?
+  createdAt       DateTime       @default(now())
+}
+
+model Reconciliation {
+  id              String   @id @default(uuid())
+  totalBank       Int
+  totalProvider   Int
+  matched         Int
+  unmatched       Int
+  discrepancies   Int
+  matchRate       Float
+  reconcilableBank Int
+  reconcilableProvider Int
+  results         String // JSON string of results
+  userId          String
+  user            User     @relation(fields: [userId], references: [id])
+  files           File[]
+  createdAt       DateTime @default(now())
+}
