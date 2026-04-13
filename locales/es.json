@@ -9,18 +9,18 @@
     "getStartedButton": "Comenzar →"
   },
   "hero": {
-    "title": "Cuadre sus datos bancarios y de pagos en minutos",
+    "title": "Concilie sus datos bancarios y de pagos en minutos",
     "subtitle": "Cargue sus archivos y obtenga un informe limpio y conciliado al instante.",
-    "cta": "Obtenga un cuadre gratuito",
+    "cta": "Obtenga una conciliación gratuita",
     "privacy": "No almacenamos sus datos. Nunca."
   },
   "problem": {
-    "title": "El problema del cuadre",
-    "description": "Las pequeñas empresas pierden tiempo y dinero cada mes en el cuadre financiero manual.",
-    "header": "El problema del cuadre",
-    "subtitle": "Las pequeñas empresas pierden tiempo y dinero cada mes en el cuadre financiero manual.",
+    "title": "El problema de la conciliación",
+    "description": "Las pequeñas empresas pierden tiempo y dinero cada mes en la conciliación financiera manual.",
+    "header": "El problema de la conciliación",
+    "subtitle": "Las pequeñas empresas pierden tiempo y dinero cada mes en la conciliación financiera manual.",
     "problem1": {
-      "title": "El cuadre manual es lento",
+      "title": "La conciliación manual es lenta",
       "description": "Horas dedicadas a cruzar estados bancarios con exportaciones de proveedores de pagos, línea por línea."
     },
     "problem2": {
@@ -62,30 +62,30 @@
       "description": "Arrastre su CSV bancario y el CSV del proveedor de pagos a Selthiron."
     },
     "step2": {
-      "title": "Cuadrar",
+      "title": "Conciliar",
       "description": "Nuestro motor normaliza y cruza cada transacción automáticamente."
     },
     "step3": {
       "title": "Revisar",
-      "description": "Vea transacciones cuadradas, no cuadradas y marcadas en un informe claro."
+      "description": "Vea transacciones conciliadas, no conciliadas y marcadas en un informe claro."
     }
   },
   "preview": {
     "title": "Véalo en acción",
-    "description": "Una visión clara e instantánea de sus resultados de cuadre.",
+    "description": "Una visión clara e instantánea de sus resultados de conciliación",
     "header": "Véalo en acción",
-    "subtitle": "Una visión clara e instantánea de sus resultados de cuadre."
+    "subtitle": "Una visión clara e instantánea de sus resultados de conciliación."
   },
   "finalCTA": {
     "title": "Pruebe Selthiron gratis",
-    "description": "Cargue sus archivos, obtenga su informe de cuadre. No se necesita cuenta.",
-    "button": "Iniciar cuadre",
+    "description": "Cargue sus archivos, obtenga su informe de conciliación. No se necesita cuenta.",
+    "button": "Iniciar conciliación",
     "privacy": "Procesamos sus datos temporalmente y los eliminamos inmediatamente después del uso."
   },
   "access": {
     "welcomeBack": "Bienvenido de nuevo",
     "createAccount": "Crear cuenta",
-    "signInToAccess": "Inicie sesión para acceder a su herramienta de cuadre.",
+    "signInToAccess": "Inicie sesión para acceder a su herramienta de conciliación.",
     "signUpToStart": "Regístrese para comenzar con Selthiron.",
     "name": "Nombre",
     "yourName": "Su nombre",
@@ -99,18 +99,18 @@
     "yourDataSecure": "Sus datos están seguros y almacenados encriptados."
   },
   "tool": {
-    "title": "Cuadre de Pagos Bancarios y Proveedores",
+    "title": "Conciliación de Pagos Bancarios y Proveedores",
     "subtitle": "Cargue sus archivos CSV para conciliar transacciones automáticamente",
     "uploadBank": "Cargar archivo bancario",
     "uploadProvider": "Cargar archivo de proveedor de pagos",
     "bankFileLabel": "Transacciones bancarias (CSV/Excel)",
     "providerFileLabel": "Transacciones de proveedor de pagos (CSV/Excel)",
-    "reconcile": "Cuadrar pagos",
+    "reconcile": "Conciliar pagos",
     "noFileSelected": "Ningún archivo seleccionado",
     "uploadFile": "Cargar archivo",
     "processingFiles": "Procesando archivos...",
     "privacyNotice": "Privacidad",
-    "privacyNoticeDescription": "Sus archivos se procesan localmente. Solo se guardan los resultados del cuadre.",
+    "privacyNoticeDescription": "Sus archivos se procesan localmente. Solo se guardan los resultados de la conciliación.",
     "dropBankHere": "Arrastre su CSV bancario aquí",
     "dropProviderHere": "Arrastre su CSV de Stripe/PayPal aquí",
     "dragDropOrClick": "Arrastre y suelte o haga clic para explorar (.csv)"
@@ -121,7 +121,7 @@
     "dragDropOrClick": "Arrastre y suelte o haga clic para explorar (.csv)"
   },
   "results": {
-    "title": "Resultados del Cuadre",
+    "title": "Resultados de la Conciliación",
     "summary": "Resumen",
     "totalBank": "Total de Transacciones Bancarias",
     "totalProvider": "Total de Transacciones del Proveedor",
@@ -132,26 +132,26 @@
     "reconcilableBank": "Bancarios Conciliables",
     "reconcilableProvider": "Proveedores Conciliables",
     "downloadCSV": "Descargar CSV",
-    "newReconciliation": "Nuevo cuadre",
+    "newReconciliation": "Nueva conciliación",
     "signInToSave": "Inicie sesión para guardar",
-    "signInToSaveDesc": "Inicie sesión para guardar este cuadre en su historial.",
+    "signInToSaveDesc": "Inicie sesión para guardar esta conciliación en su historial.",
     "close": "Cerrar",
-    "reconciliationSaved": "Cuadre guardado en su historial.",
+    "reconciliationSaved": "Conciliación guardada en su historial.",
     "providerOnly": "Solo proveedor",
     "bankTransactions": "transacciones bancarias",
     "providerTransactions": "transacciones del proveedor"
   },
   "history": {
-    "title": "Historial de Cuadres",
-    "description": "Visualice sus cuadres anteriores y descargue informes.",
-    "noHistory": "Aún no hay historial de cuadres.",
-    "startFirst": "Inicie su primer cuadre para verlo aquí.",
+    "title": "Historial de Conciliaciones",
+    "description": "Visualice sus conciliaciones anteriores y descargue informes.",
+    "noHistory": "Aún no hay historial de conciliaciones.",
+    "startFirst": "Inicie su primera conciliación para verlo aquí.",
     "loadingHistory": "Cargando historial...",
-    "startReconciliation": "Iniciar cuadre",
+    "startReconciliation": "Iniciar conciliación",
     "emptyStateMessage": "Comience cargando su primer estado bancario y exportación de proveedor."
   },
   "footer": {
-    "copyright": "Cuadre financiero con privacidad primero."
+    "copyright": "Conciliación financiera con privacidad primero."
   },
   "table": {
     "date": "Fecha",
