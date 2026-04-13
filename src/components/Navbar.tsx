@@ -2,10 +2,13 @@ import { useNavigate } from "react-router-dom";
 import logo from "@/assets/selthiron-logo.png";
 import { useAuth } from "@/contexts/AuthContext";
 import { Button } from "@/components/ui/button";
+import { useTranslation } from "react-i18next";
+import LanguageSwitcher from "./LanguageSwitcher";
 
 const Navbar = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
 
   const handleLogoClick = () => {
     navigate(isAuthenticated ? "/tool" : "/");
@@ -17,14 +20,17 @@ const Navbar = () => {
         <button onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
           <img src={logo} alt="Selthiron" className="h-24 bg-transparent" />
         </button>
-        <Button
-          variant="ghost"
-          size="sm"
-          onClick={() => navigate("/tool")}
-          className="text-primary hover:text-primary/80"
-        >
-          Get started →
-        </Button>
+        <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => navigate("/tool")}
+            className="text-primary hover:text-primary/80"
+          >
+            {t('getStartedButton')}
+          </Button>
+        </div>
       </div>
     </nav>
   );

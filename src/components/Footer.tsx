@@ -1,10 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import logo from "@/assets/selthiron-logo.png";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 
 const Footer = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
 
   const handleLogoClick = () => {
     navigate(isAuthenticated ? "/tool" : "/");
@@ -17,7 +19,7 @@ const Footer = () => {
           <img src={logo} alt="Selthiron" className="h-24 opacity-60 bg-transparent" />
         </button>
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Selthiron. Privacy-first financial reconciliation.
+          © {new Date().getFullYear()} Selthiron. {t('copyright')}
         </p>
       </div>
     </footer>

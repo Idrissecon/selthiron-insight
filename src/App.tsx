@@ -10,6 +10,7 @@ import Tool from "./pages/Tool.tsx";
 import Results from "./pages/Results.tsx";
 import History from "./pages/History.tsx";
 import NotFound from "./pages/NotFound.tsx";
+import "./lib/i18n";
 
 const queryClient = new QueryClient();
 
