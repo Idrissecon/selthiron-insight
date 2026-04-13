@@ -32,8 +32,12 @@ const Access = () => {
         await signup(email, password, name);
       }
 
+      // Get the current session to get the user
+      const { data: { session } } = await supabase.auth.getSession();
+      const currentUser = session?.user;
+
       // If there's a report to save, save it to Supabase
-      if (report && user) {
+      if (report && currentUser) {
         try {
           // Save reconciliation results to database
           const { error: recError } = await supabase
@@ -48,7 +52,7 @@ const Access = () => {
               reconcilable_bank: report.reconcilableBank,
               reconcilable_provider: report.reconcilableProvider,
               results: report.results,
-              user_id: user.id,
+              user_id: currentUser.id,
             });
 
           if (recError) throw recError;
