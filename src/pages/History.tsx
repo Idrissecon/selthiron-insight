@@ -69,9 +69,7 @@ const History = () => {
     <div className="min-h-screen bg-background">
       <div className="border-b">
         <div className="container mx-auto flex items-center justify-between h-14 px-6">
-          <button onClick={() => navigate("/tool")} className="cursor-pointer hover:opacity-80 transition-opacity">
-            <img src={logo} alt="Selthiron" className="h-20" />
-          </button>
+          <img src={logo} alt="Selthiron" className="h-20 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate("/tool")} />
           <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
             <ArrowLeft className="w-4 h-4 mr-1" />
             New reconciliation
