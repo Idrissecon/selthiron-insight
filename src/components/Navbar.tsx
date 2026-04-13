@@ -15,7 +15,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b">
       <div className="container mx-auto flex items-center justify-between h-20 px-6">
         <button onClick={handleLogoClick} className="flex items-center gap-2 cursor-pointer hover:opacity-80 transition-opacity">
-          <img src={logo} alt="Selthiron" className="h-24" />
+          <img src={logo} alt="Selthiron" className="h-24 bg-transparent" />
         </button>
         <Button
           variant="ghost"

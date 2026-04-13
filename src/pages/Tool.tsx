@@ -143,7 +143,9 @@ const Tool = () => {
     <div className="min-h-screen bg-background">
       <div className="border-b">
         <div className="container mx-auto flex items-center justify-between h-14 px-6">
-          <img src={logo} alt="Selthiron" className="h-20 cursor-pointer hover:opacity-80 transition-opacity" onClick={() => navigate(isAuthenticated ? "/tool" : "/")} />
+          <button onClick={() => navigate(isAuthenticated ? "/tool" : "/")} className="cursor-pointer hover:opacity-80 transition-opacity">
+            <img src={logo} alt="Selthiron" className="h-20 bg-transparent" />
+          </button>
           <div className="flex items-center gap-4">
             {isAuthenticated ? (
               <>
