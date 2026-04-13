@@ -19,6 +19,10 @@ const Access = () => {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
+  const handleLogoClick = () => {
+    navigate("/");
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
@@ -69,7 +73,9 @@ const Access = () => {
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
-          <img src={logo} alt="Selthiron" className="h-8 mx-auto mb-8" />
+          <button onClick={handleLogoClick} className="cursor-pointer hover:opacity-80 transition-opacity mx-auto mb-8">
+            <img src={logo} alt="Selthiron" className="h-16" />
+          </button>
           <h1 className="text-2xl font-semibold mb-2">{isLogin ? "Welcome back" : "Create account"}</h1>
           <p className="text-muted-foreground">
             {isLogin ? "Sign in to access your reconciliation tool." : "Sign up to get started with Selthiron."}
