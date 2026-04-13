@@ -155,7 +155,11 @@
     "matchRate": "Tasa de Coincidencia",
     "matched": "Coincidentes",
     "unmatched": "No Coincidentes",
-    "discrepancies": "Discrepancias"
+    "discrepancies": "Discrepancias",
+    "delete": "Eliminar",
+    "rename": "Renombrar",
+    "deleteConfirm": "¿Está seguro de que desea eliminar esta conciliación?",
+    "deleteSuccess": "Conciliación eliminada exitosamente."
   },
   "footer": {
     "copyright": "Conciliación financiera con privacidad primero."

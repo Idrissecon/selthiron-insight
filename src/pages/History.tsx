@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Clock, CheckCircle2, AlertTriangle, ArrowLeft, Eye } from "lucide-react";
+import { Clock, CheckCircle2, AlertTriangle, ArrowLeft, Eye, Trash2, Pencil } from "lucide-react";
 import logo from "@/assets/selthiron-logo.png";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabase";
@@ -13,6 +13,9 @@ const History = () => {
   const { t } = useTranslation();
   const [reconciliations, setReconciliations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
+  const [renameId, setRenameId] = useState<string | null>(null);
+  const [newName, setNewName] = useState("");
 
   useEffect(() => {
     if (!user) {
@@ -54,6 +57,40 @@ const History = () => {
 
       if (error) throw error;
       navigate("/results", { state: { report: data } });
+    } catch (error) {
+      // Silently fail - user can try again
+    }
+  };
+
+  const deleteReconciliation = async (id: string) => {
+    try {
+      const { error } = await supabase
+        .from('reconciliations')
+        .delete()
+        .eq('id', id);
+
+      if (error) throw error;
+      setReconciliations(reconciliations.filter(r => r.id !== id));
+      setDeleteConfirm(null);
+    } catch (error) {
+      // Silently fail - user can try again
+    }
+  };
+
+  const renameReconciliation = async (id: string) => {
+    if (!newName.trim()) return;
+    try {
+      const { error } = await supabase
+        .from('reconciliations')
+        .update({ name: newName.trim() })
+        .eq('id', id);
+
+      if (error) throw error;
+      setReconciliations(reconciliations.map(r => 
+        r.id === id ? { ...r, name: newName.trim() } : r
+      ));
+      setRenameId(null);
+      setNewName("");
     } catch (error) {
       // Silently fail - user can try again
     }
@@ -115,22 +152,73 @@ const History = () => {
                        <AlertTriangle className="w-5 h-5" />}
                     </div>
                     <div>
-                      <p className="font-medium">
-                        {new Date(rec.created_at).toLocaleDateString()} {t('history.at')} {new Date(rec.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
-                      </p>
+                      {renameId === rec.id ? (
+                        <input
+                          type="text"
+                          value={newName}
+                          onChange={(e) => setNewName(e.target.value)}
+                          onBlur={() => renameReconciliation(rec.id)}
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') renameReconciliation(rec.id);
+                            if (e.key === 'Escape') {
+                              setRenameId(null);
+                              setNewName("");
+                            }
+                          }}
+                          className="font-medium bg-surface border rounded px-2 py-1 w-64"
+                          autoFocus
+                        />
+                      ) : (
+                        <p className="font-medium">
+                          {rec.name || `${new Date(rec.created_at).toLocaleDateString()} ${t('history.at')} ${new Date(rec.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`}
+                        </p>
+                      )}
                       <p className="text-xs text-muted-foreground">
                         {rec.files?.length || 0} {t('history.files')}
                       </p>
                     </div>
                   </div>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => viewReconciliation(rec.id)}
-                  >
-                    <Eye className="w-4 h-4 mr-1" />
-                    {t('history.view')}
-                  </Button>
+                  <div>
+                    <div className="flex gap-2">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => viewReconciliation(rec.id)}
+                      >
+                        <Eye className="w-4 h-4 mr-1" />
+                        {t('history.view')}
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          setRenameId(rec.id);
+                          setNewName(rec.name || "");
+                        }}
+                      >
+                        <Pencil className="w-4 h-4 mr-1" />
+                        {t('history.rename')}
+                      </Button>
+                      {deleteConfirm === rec.id ? (
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => deleteReconciliation(rec.id)}
+                        >
+                          {t('history.delete')}
+                        </Button>
+                      ) : (
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          onClick={() => setDeleteConfirm(rec.id)}
+                        >
+                          <Trash2 className="w-4 h-4 mr-1" />
+                          {t('history.delete')}
+                        </Button>
+                      )}
+                    </div>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">

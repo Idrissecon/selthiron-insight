@@ -155,7 +155,11 @@
     "matchRate": "Match Rate",
     "matched": "Matched",
     "unmatched": "Unmatched",
-    "discrepancies": "Discrepancies"
+    "discrepancies": "Discrepancies",
+    "delete": "Delete",
+    "rename": "Rename",
+    "deleteConfirm": "Are you sure you want to delete this reconciliation?",
+    "deleteSuccess": "Reconciliation deleted successfully."
   },
   "footer": {
     "copyright": "Privacy-first financial reconciliation."
