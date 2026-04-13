@@ -1,9 +1,10 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, XCircle, AlertTriangle, ArrowLeft, Download, Shield } from "lucide-react";
+import { CheckCircle2, XCircle, AlertTriangle, ArrowLeft, Download, Shield, X } from "lucide-react";
 import logo from "@/assets/selthiron-logo.png";
 import type { ReconciliationReport, MatchResult } from "@/lib/reconciliation";
 import { useAuth } from "@/contexts/AuthContext";
+import { useEffect, useState } from "react";
 
 const statusConfig = {
   matched: { icon: CheckCircle2, label: "Matched", className: "text-success", bg: "bg-success/10" },
@@ -16,6 +17,13 @@ const Results = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const report = location.state?.report as ReconciliationReport | undefined;
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
+  useEffect(() => {
+    if (!isAuthenticated) {
+      setShowLoginModal(true);
+    }
+  }, [isAuthenticated]);
 
   if (!report) return <Navigate to="/tool" replace />;
 
@@ -54,10 +62,22 @@ const Results = () => {
       <div className="border-b">
         <div className="container mx-auto flex items-center justify-between h-14 px-6">
           <img src={logo} alt="Selthiron" className="h-6" />
-          <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
-            <ArrowLeft className="w-4 h-4 mr-1" />
-            New reconciliation
-          </Button>
+          <div className="flex items-center gap-3">
+            {!isAuthenticated && (
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/access")}
+              >
+                <Shield className="w-4 h-4 mr-2" />
+                Sign in to save
+              </Button>
+            )}
+            <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
+              <ArrowLeft className="w-4 h-4 mr-1" />
+              New reconciliation
+            </Button>
+          </div>
         </div>
       </div>
 
@@ -109,22 +129,39 @@ const Results = () => {
               This reconciliation has been saved to your account history.
             </p>
           ) : (
-            <div className="space-y-3">
-              <p className="text-xs text-muted-foreground">
-                Sign in to save this reconciliation to your history.
-              </p>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate("/access")}
-              >
-                <Shield className="w-4 h-4 mr-2" />
-                Sign in to save
-              </Button>
-            </div>
+            <p className="text-xs text-muted-foreground">
+              Your reconciliation is ready. Sign in to save it to your history.
+            </p>
           )}
         </div>
       </div>
+
+      {/* Login Modal */}
+      {showLoginModal && !isAuthenticated && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
+          <div className="bg-background border rounded-xl p-6 max-w-md w-full shadow-lg">
+            <div className="flex items-center justify-between mb-4">
+              <h3 className="text-lg font-semibold">Save your reconciliation</h3>
+              <button
+                onClick={() => setShowLoginModal(false)}
+                className="text-muted-foreground hover:text-foreground transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+            <p className="text-sm text-muted-foreground mb-6">
+              Sign in to save this reconciliation to your history and access it later.
+            </p>
+            <Button
+              className="w-full"
+              onClick={() => navigate("/access")}
+            >
+              <Shield className="w-4 h-4 mr-2" />
+              Sign in to save
+            </Button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
