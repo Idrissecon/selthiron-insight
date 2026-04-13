@@ -83,11 +83,11 @@ const Results = () => {
               onClick={() => navigate("/access", { state: { report } })}
             >
               <Shield className="w-4 h-4 mr-2" />
-              {t('signIn')}
+              {t('common.signIn')}
             </Button>
             <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              {t('newReconciliation')}
+              {t('results.newReconciliation')}
             </Button>
           </div>
         </div>
@@ -96,35 +96,35 @@ const Results = () => {
       <div className="container mx-auto px-6 py-12 max-w-4xl">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-semibold mb-2">{t('reconciliationResults')}</h1>
-            <p className="text-sm text-muted-foreground">{t('totalBank')} {report.totalBank} bank transactions · {report.totalProvider} provider transactions</p>
+            <h1 className="text-2xl font-semibold mb-2">{t('results.title')}</h1>
+            <p className="text-sm text-muted-foreground">{t('results.totalBank')} {report.totalBank} bank transactions · {report.totalProvider} provider transactions</p>
           </div>
           <Button variant="outline" size="sm" onClick={exportCSV}>
             <Download className="w-4 h-4 mr-1" />
-            {t('downloadCSV')}
+            {t('results.downloadCSV')}
           </Button>
         </div>
 
         {/* Summary Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           <SummaryCard
-            label={t('matchRate')}
+            label={t('results.matchRate')}
             value={`${report.matchRate?.toFixed(0) || 0}%`}
             className="text-success"
           />
-          <SummaryCard label={t('matched')} value={report.matched || 0} className="text-success" />
-          <SummaryCard label={t('unmatched')} value={report.unmatched || 0} className="text-destructive" />
-          <SummaryCard label={t('discrepancies')} value={report.discrepancies || 0} className="text-warning" />
+          <SummaryCard label={t('results.matched')} value={report.matched || 0} className="text-success" />
+          <SummaryCard label={t('results.unmatched')} value={report.unmatched || 0} className="text-destructive" />
+          <SummaryCard label={t('results.discrepancies')} value={report.discrepancies || 0} className="text-warning" />
         </div>
 
         {/* Results Table */}
         <div className="bg-surface-elevated border rounded-xl overflow-hidden shadow-sm">
           <div className="hidden md:grid grid-cols-[100px_1fr_110px_110px_100px] gap-4 px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-surface">
-            <span>{t('date')}</span>
-            <span>{t('description')}</span>
-            <span className="text-right">{t('amount')}</span>
-            <span className="text-right">{t('provider')}</span>
-            <span className="text-right">{t('status')}</span>
+            <span>{t('table.date')}</span>
+            <span>{t('table.description')}</span>
+            <span className="text-right">{t('table.amount')}</span>
+            <span className="text-right">{t('table.provider')}</span>
+            <span className="text-right">{t('table.status')}</span>
           </div>
           <div className="divide-y max-h-[500px] overflow-y-auto">
             {report.results.map((r, i) => (
@@ -135,9 +135,9 @@ const Results = () => {
 
         <div className="mt-8 text-center">
           {isAuthenticated ? (
-            <p className="text-xs text-muted-foreground">{t('reconciliationSaved')}</p>
+            <p className="text-xs text-muted-foreground">{t('results.reconciliationSaved')}</p>
           ) : (
-            <p className="text-xs text-muted-foreground">{t('signInToSaveDesc')}</p>
+            <p className="text-xs text-muted-foreground">{t('results.signInToSaveDesc')}</p>
           )}
         </div>
       </div>
@@ -147,7 +147,7 @@ const Results = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-background border rounded-xl p-6 max-w-md w-full shadow-lg">
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg font-semibold mb-4">{t('summary')}</h2>
+              <h2 className="text-lg font-semibold mb-4">{t('results.summary')}</h2>
               <button
                 onClick={() => setShowLoginModal(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -155,13 +155,13 @@ const Results = () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-sm text-muted-foreground mb-6">{t('heroSubtitle')}</p>
+            <p className="text-sm text-muted-foreground mb-6">{t('hero.subtitle')}</p>
             <Button
               className="w-full"
               onClick={() => navigate("/access", { state: { report } })}
             >
               <Shield className="w-4 h-4 mr-2" />
-              {t('signInToSave')}
+              {t('results.signInToSave')}
             </Button>
           </div>
         </div>

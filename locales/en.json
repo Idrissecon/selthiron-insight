@@ -1,0 +1,156 @@
+{
+  "common": {
+    "getStarted": "Get started →",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out"
+  },
+  "navbar": {
+    "getStartedButton": "Get started →"
+  },
+  "hero": {
+    "title": "Reconcile your bank and payment data in minutes",
+    "subtitle": "Upload your files and get a clean, matched report instantly.",
+    "cta": "Get a free reconciliation",
+    "privacy": "We don't store your data. Ever."
+  },
+  "problem": {
+    "title": "The reconciliation problem",
+    "description": "Small businesses lose time and money every month to manual financial reconciliation.",
+    "problem1": {
+      "title": "Manual reconciliation is slow",
+      "description": "Hours spent cross-referencing bank statements with payment provider exports, line by line."
+    },
+    "problem2": {
+      "title": "Spreadsheets cause errors",
+      "description": "Copy-paste mistakes, wrong formulas, and missed transactions lead to costly discrepancies."
+    },
+    "problem3": {
+      "title": "Hard to track mismatches",
+      "description": "Finding which transactions don't match across systems is like searching for a needle in a haystack."
+    }
+  },
+  "benefits": {
+    "title": "Why Selthiron",
+    "benefit1": {
+      "title": "Save hours",
+      "description": "What used to take half a day now takes minutes."
+    },
+    "benefit2": {
+      "title": "Reduce errors",
+      "description": "Automated matching eliminates human mistakes."
+    },
+    "benefit3": {
+      "title": "Instant clarity",
+      "description": "See exactly which transactions match and which don't."
+    },
+    "benefit4": {
+      "title": "No setup",
+      "description": "No integrations, no onboarding. Just upload and go."
+    }
+  },
+  "solution": {
+    "title": "How it works",
+    "description": "Three steps. No setup. No account required.",
+    "step1": {
+      "title": "Upload",
+      "description": "Drop your bank CSV and payment provider CSV into Selthiron."
+    },
+    "step2": {
+      "title": "Match",
+      "description": "Our engine normalizes and cross-references every transaction automatically."
+    },
+    "step3": {
+      "title": "Review",
+      "description": "See matched, unmatched, and flagged transactions in a clear report."
+    }
+  },
+  "preview": {
+    "title": "See it in action",
+    "description": "A clear, instant overview of your reconciliation results."
+  },
+  "access": {
+    "welcomeBack": "Welcome back",
+    "createAccount": "Create account",
+    "signInToAccess": "Sign in to access your reconciliation tool.",
+    "signUpToStart": "Sign up to get started with Selthiron.",
+    "name": "Name",
+    "yourName": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "you@company.com",
+    "password": "Password",
+    "passwordPlaceholder": "••••••••",
+    "processing": "Processing...",
+    "dontHaveAccount": "Don't have an account? Sign up",
+    "alreadyHaveAccount": "Already have an account? Sign in",
+    "yourDataSecure": "Your data is secure and stored encrypted."
+  },
+  "tool": {
+    "title": "Bank & Payment Reconciliation",
+    "subtitle": "Upload your CSV files to match transactions automatically",
+    "uploadBank": "Upload bank file",
+    "uploadProvider": "Upload payment provider file",
+    "bankFileLabel": "Bank transactions (CSV/Excel)",
+    "providerFileLabel": "Payment provider transactions (CSV/Excel)",
+    "reconcile": "Reconcile",
+    "noFileSelected": "No file selected",
+    "uploadFile": "Upload file",
+    "processingFiles": "Processing files...",
+    "privacyNotice": "Privacy",
+    "privacyNoticeDescription": "Your files are processed locally. Only reconciliation results are saved.",
+    "dropBankHere": "Drop your bank CSV here",
+    "dropProviderHere": "Drop your Stripe / PayPal CSV here",
+    "dragDropOrClick": "Drag & drop or click to browse (.csv)"
+  },
+  "upload": {
+    "dropBankHere": "Drop your bank CSV here",
+    "dropProviderHere": "Drop your Stripe / PayPal CSV here",
+    "dragDropOrClick": "Drag & drop or click to browse (.csv)"
+  },
+  "results": {
+    "title": "Reconciliation Results",
+    "summary": "Summary",
+    "totalBank": "Total Bank Transactions",
+    "totalProvider": "Total Provider Transactions",
+    "matched": "Matched",
+    "unmatched": "Unmatched",
+    "discrepancies": "Discrepancies",
+    "matchRate": "Match Rate",
+    "reconcilableBank": "Reconcilable Bank",
+    "reconcilableProvider": "Reconcilable Provider",
+    "downloadCSV": "Download CSV",
+    "newReconciliation": "New reconciliation",
+    "signInToSave": "Sign in to save",
+    "signInToSaveDesc": "Sign in to save this reconciliation to your history.",
+    "close": "Close",
+    "reconciliationSaved": "Reconciliation saved to your history.",
+    "providerOnly": "Provider only"
+  },
+  "history": {
+    "title": "Reconciliation History",
+    "description": "View your past reconciliations and download reports.",
+    "noHistory": "No reconciliation history yet.",
+    "startFirst": "Start your first reconciliation to see it here.",
+    "loadingHistory": "Loading history...",
+    "startReconciliation": "Start reconciliation"
+  },
+  "footer": {
+    "copyright": "Privacy-first financial reconciliation."
+  },
+  "table": {
+    "date": "Date",
+    "description": "Description",
+    "amount": "Amount",
+    "provider": "Provider",
+    "status": "Status"
+  },
+  "status": {
+    "matched": "Matched",
+    "unmatched": "Unmatched",
+    "discrepancy": "Discrepancy"
+  },
+  "errors": {
+    "uploadFailed": "Upload failed",
+    "processingError": "Processing error"
+  }
+}

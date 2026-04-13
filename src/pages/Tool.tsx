@@ -91,7 +91,7 @@ const Tool = () => {
       // Navigate to results
       navigate("/results", { state: { report, sessionId } });
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Upload failed");
+      setError(err instanceof Error ? err.message : t('errors.uploadFailed'));
     } finally {
       setProcessing(false);
     }
@@ -158,7 +158,7 @@ const Tool = () => {
                   className="text-xs"
                 >
                   <Clock className="w-3.5 h-3.5 mr-2" />
-                  {t('reconciliationHistory')}
+                  {t('history.title')}
                 </Button>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <Shield className="w-3.5 h-3.5" />
@@ -171,7 +171,7 @@ const Tool = () => {
                   className="text-xs"
                 >
                   <LogOut className="w-3.5 h-3.5 mr-2" />
-                  {t('signOut')}
+                  {t('common.signOut')}
                 </Button>
               </>
             ) : (
@@ -182,7 +182,7 @@ const Tool = () => {
                 className="text-xs"
               >
                 <Shield className="w-4 h-4 mr-2" />
-                {t('signIn')}
+                {t('common.signIn')}
               </Button>
             )}
           </div>
@@ -190,9 +190,9 @@ const Tool = () => {
       </div>
 
       <div className="container mx-auto px-6 py-16 max-w-2xl">
-        <h1 className="text-2xl font-semibold mb-2">{t('bankPaymentReconciliation')}</h1>
+        <h1 className="text-2xl font-semibold mb-2">{t('tool.title')}</h1>
         <p className="text-muted-foreground mb-6">
-          {t('heroSubtitle')}
+          {t('tool.subtitle')}
         </p>
 
         {error && (
@@ -203,14 +203,14 @@ const Tool = () => {
 
         <div className="space-y-6">
           <div>
-            <label className="text-sm font-medium mb-2 block">{t('uploadBank')}</label>
-            <FileDropZone label="Drop your bank CSV here" file={bankFile} setter={setBankFile} id="bank-file" />
+            <label className="text-sm font-medium mb-2 block">{t('tool.uploadBank')}</label>
+            <FileDropZone label={t('upload.dropBankHere')} file={bankFile} setter={setBankFile} id="bank-file" />
           </div>
 
           <div>
-            <label className="text-sm font-medium mb-2 block">{t('uploadProvider')}</label>
+            <label className="text-sm font-medium mb-2 block">{t('tool.uploadProvider')}</label>
             <FileDropZone
-              label="Drop your Stripe / PayPal CSV here"
+              label={t('upload.dropProviderHere')}
               file={providerFile}
               setter={setProviderFile}
               id="provider-file"
@@ -227,11 +227,11 @@ const Tool = () => {
             {processing ? (
               <>
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                {t('processingFiles')}
+                {t('tool.processingFiles')}
               </>
             ) : (
               <>
-                {t('reconcile')}
+                {t('tool.reconcile')}
                 <ArrowRight className="w-4 h-4 ml-2" />
               </>
             )}
@@ -240,7 +240,7 @@ const Tool = () => {
 
         <div className="mt-12 p-4 bg-surface rounded-lg border">
           <p className="text-xs text-muted-foreground text-center">
-            <strong>{t('privacyNotice')}:</strong> {t('privacyNoticeDescription')}
+            <strong>{t('tool.privacyNotice')}:</strong> {t('tool.privacyNoticeDescription')}
           </p>
         </div>
       </div>

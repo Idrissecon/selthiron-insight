@@ -7,18 +7,18 @@ const ProblemSection = () => {
   const problems = [
     {
       icon: Clock,
-      title: t('problem1Title'),
-      description: t('problem1Desc'),
+      title: t('problem.problem1.title'),
+      description: t('problem.problem1.description'),
     },
     {
       icon: AlertTriangle,
-      title: t('problem2Title'),
-      description: t('problem2Desc'),
+      title: t('problem.problem2.title'),
+      description: t('problem.problem2.description'),
     },
     {
       icon: Search,
-      title: t('problem3Title'),
-      description: t('problem3Desc'),
+      title: t('problem.problem3.title'),
+      description: t('problem.problem3.description'),
     },
   ];
 

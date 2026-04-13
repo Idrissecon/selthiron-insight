@@ -5,10 +5,10 @@ const BenefitsSection = () => {
   const { t } = useTranslation();
 
   const benefits = [
-    { icon: Zap, title: t('benefit1Title'), description: t('benefit1Desc') },
-    { icon: ShieldCheck, title: t('benefit2Title'), description: t('benefit2Desc') },
-    { icon: Eye, title: t('benefit3Title'), description: t('benefit3Desc') },
-    { icon: Settings, title: t('benefit4Title'), description: t('benefit4Desc') },
+    { icon: Zap, title: t('benefits.benefit1.title'), description: t('benefits.benefit1.description') },
+    { icon: ShieldCheck, title: t('benefits.benefit2.title'), description: t('benefits.benefit2.description') },
+    { icon: Eye, title: t('benefits.benefit3.title'), description: t('benefits.benefit3.description') },
+    { icon: Settings, title: t('benefits.benefit4.title'), description: t('benefits.benefit4.description') },
   ];
 
   return (

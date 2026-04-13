@@ -1,0 +1,156 @@
+{
+  "common": {
+    "getStarted": "Comenzar →",
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar sesión"
+  },
+  "navbar": {
+    "getStartedButton": "Comenzar →"
+  },
+  "hero": {
+    "title": "Cuadre sus datos bancarios y de pagos en minutos",
+    "subtitle": "Cargue sus archivos y obtenga un informe limpio y conciliado al instante.",
+    "cta": "Obtenga un cuadre gratuito",
+    "privacy": "No almacenamos sus datos. Nunca."
+  },
+  "problem": {
+    "title": "El problema del cuadre",
+    "description": "Las pequeñas empresas pierden tiempo y dinero cada mes en el cuadre financiero manual.",
+    "problem1": {
+      "title": "El cuadre manual es lento",
+      "description": "Horas dedicadas a cruzar estados bancarios con exportaciones de proveedores de pagos, línea por línea."
+    },
+    "problem2": {
+      "title": "Las hojas de cálculo generan errores",
+      "description": "Errores de copiar y pegar, fórmulas incorrectas y transacciones perdidas generan discrepancias costosas."
+    },
+    "problem3": {
+      "title": "Difícil rastrear incoherencias",
+      "description": "Encontrar qué transacciones no coinciden entre sistemas es como buscar una aguja en un pajar."
+    }
+  },
+  "benefits": {
+    "title": "Por qué Selthiron",
+    "benefit1": {
+      "title": "Ahorre horas",
+      "description": "Lo que solía tomar medio día ahora toma minutos."
+    },
+    "benefit2": {
+      "title": "Reduzca errores",
+      "description": "La conciliación automática elimina errores humanos."
+    },
+    "benefit3": {
+      "title": "Claridad instantánea",
+      "description": "Vea exactamente qué transacciones coinciden y cuáles no."
+    },
+    "benefit4": {
+      "title": "Sin configuración",
+      "description": "Sin integraciones, sin onboarding. Simplemente cargue y listo."
+    }
+  },
+  "solution": {
+    "title": "Cómo funciona",
+    "description": "Tres pasos. Sin configuración. Sin cuenta requerida.",
+    "step1": {
+      "title": "Cargar",
+      "description": "Arrastre su CSV bancario y el CSV del proveedor de pagos a Selthiron."
+    },
+    "step2": {
+      "title": "Cuadrar",
+      "description": "Nuestro motor normaliza y cruza cada transacción automáticamente."
+    },
+    "step3": {
+      "title": "Revisar",
+      "description": "Vea transacciones cuadradas, no cuadradas y marcadas en un informe claro."
+    }
+  },
+  "preview": {
+    "title": "Véalo en acción",
+    "description": "Una visión clara e instantánea de sus resultados de cuadre."
+  },
+  "access": {
+    "welcomeBack": "Bienvenido de nuevo",
+    "createAccount": "Crear cuenta",
+    "signInToAccess": "Inicie sesión para acceder a su herramienta de cuadre.",
+    "signUpToStart": "Regístrese para comenzar con Selthiron.",
+    "name": "Nombre",
+    "yourName": "Su nombre",
+    "email": "Correo electrónico",
+    "emailPlaceholder": "su@empresa.com",
+    "password": "Contraseña",
+    "passwordPlaceholder": "••••••••",
+    "processing": "Procesando...",
+    "dontHaveAccount": "¿No tiene cuenta? Regístrese",
+    "alreadyHaveAccount": "¿Ya tiene cuenta? Inicie sesión",
+    "yourDataSecure": "Sus datos están seguros y almacenados encriptados."
+  },
+  "tool": {
+    "title": "Cuadre de Pagos Bancarios y Proveedores",
+    "subtitle": "Cargue sus archivos CSV para conciliar transacciones automáticamente",
+    "uploadBank": "Cargar archivo bancario",
+    "uploadProvider": "Cargar archivo de proveedor de pagos",
+    "bankFileLabel": "Transacciones bancarias (CSV/Excel)",
+    "providerFileLabel": "Transacciones de proveedor de pagos (CSV/Excel)",
+    "reconcile": "Cuadrar pagos",
+    "noFileSelected": "Ningún archivo seleccionado",
+    "uploadFile": "Cargar archivo",
+    "processingFiles": "Procesando archivos...",
+    "privacyNotice": "Privacidad",
+    "privacyNoticeDescription": "Sus archivos se procesan localmente. Solo se guardan los resultados del cuadre.",
+    "dropBankHere": "Arrastre su CSV bancario aquí",
+    "dropProviderHere": "Arrastre su CSV de Stripe/PayPal aquí",
+    "dragDropOrClick": "Arrastre y suelte o haga clic para explorar (.csv)"
+  },
+  "upload": {
+    "dropBankHere": "Arrastre su CSV bancario aquí",
+    "dropProviderHere": "Arrastre su CSV de Stripe/PayPal aquí",
+    "dragDropOrClick": "Arrastre y suelte o haga clic para explorar (.csv)"
+  },
+  "results": {
+    "title": "Resultados del Cuadre",
+    "summary": "Resumen",
+    "totalBank": "Total de Transacciones Bancarias",
+    "totalProvider": "Total de Transacciones del Proveedor",
+    "matched": "Coincidentes",
+    "unmatched": "No coincidentes",
+    "discrepancies": "Discrepancias",
+    "matchRate": "Tasa de Coincidencia",
+    "reconcilableBank": "Bancarios Conciliables",
+    "reconcilableProvider": "Proveedores Conciliables",
+    "downloadCSV": "Descargar CSV",
+    "newReconciliation": "Nuevo cuadre",
+    "signInToSave": "Inicie sesión para guardar",
+    "signInToSaveDesc": "Inicie sesión para guardar este cuadre en su historial.",
+    "close": "Cerrar",
+    "reconciliationSaved": "Cuadre guardado en su historial.",
+    "providerOnly": "Solo proveedor"
+  },
+  "history": {
+    "title": "Historial de Cuadres",
+    "description": "Visualice sus cuadres anteriores y descargue informes.",
+    "noHistory": "Aún no hay historial de cuadres.",
+    "startFirst": "Inicie su primer cuadre para verlo aquí.",
+    "loadingHistory": "Cargando historial...",
+    "startReconciliation": "Iniciar cuadre"
+  },
+  "footer": {
+    "copyright": "Cuadre financiero con privacidad primero."
+  },
+  "table": {
+    "date": "Fecha",
+    "description": "Descripción",
+    "amount": "Monto",
+    "provider": "Proveedor",
+    "status": "Estado"
+  },
+  "status": {
+    "matched": "Coincidente",
+    "unmatched": "No coincidente",
+    "discrepancy": "Discrepancia"
+  },
+  "errors": {
+    "uploadFailed": "Carga fallida",
+    "processingError": "Error de procesamiento"
+  }
+}

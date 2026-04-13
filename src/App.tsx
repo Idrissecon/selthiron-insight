@@ -1,3 +1,4 @@
+import "./lib/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Toaster as Sonner } from "@/components/ui/sonner";
@@ -10,7 +11,6 @@ import Tool from "./pages/Tool.tsx";
 import Results from "./pages/Results.tsx";
 import History from "./pages/History.tsx";
 import NotFound from "./pages/NotFound.tsx";
-import "./lib/i18n";
 
 const queryClient = new QueryClient();
 

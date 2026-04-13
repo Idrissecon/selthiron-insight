@@ -13,9 +13,9 @@ const ProductPreview = () => {
   ];
 
   const statusConfig = {
-    matched: { icon: CheckCircle2, label: t('matchedLabel'), className: "text-success" },
-    unmatched: { icon: XCircle, label: t('unmatchedLabel'), className: "text-destructive" },
-    discrepancy: { icon: AlertTriangle, label: t('discrepancyLabel'), className: "text-warning" },
+    matched: { icon: CheckCircle2, label: t('status.matched'), className: "text-success" },
+    unmatched: { icon: XCircle, label: t('status.unmatched'), className: "text-destructive" },
+    discrepancy: { icon: AlertTriangle, label: t('status.discrepancy'), className: "text-warning" },
   };
 
   return (
@@ -33,25 +33,25 @@ const ProductPreview = () => {
               <div className="flex gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-success/10 rounded-md">
                   <CheckCircle2 className="w-4 h-4 text-success" />
-                  <span className="text-sm font-medium">3 {t('matchedLabel')}</span>
+                  <span className="text-sm font-medium">3 {t('status.matched')}</span>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-destructive/10 rounded-md">
                   <XCircle className="w-4 h-4 text-destructive" />
-                  <span className="text-sm font-medium">1 {t('unmatchedLabel')}</span>
+                  <span className="text-sm font-medium">1 {t('status.unmatched')}</span>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-warning/10 rounded-md">
                   <AlertTriangle className="w-4 h-4 text-warning" />
-                  <span className="text-sm font-medium">1 {t('discrepancyLabel')}</span>
+                  <span className="text-sm font-medium">1 {t('status.discrepancy')}</span>
                 </div>
               </div>
             </div>
           </div>
           <div className="divide-y">
             <div className="grid grid-cols-[100px_1fr_120px_120px] gap-4 px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-              <span>{t('date')}</span>
-              <span>{t('description')}</span>
-              <span className="text-right">{t('amount')}</span>
-              <span className="text-right">{t('status')}</span>
+              <span>{t('table.date')}</span>
+              <span>{t('table.description')}</span>
+              <span className="text-right">{t('table.amount')}</span>
+              <span className="text-right">{t('table.status')}</span>
             </div>
             {mockData.map((row, i) => {
               const config = statusConfig[row.status as keyof typeof statusConfig];

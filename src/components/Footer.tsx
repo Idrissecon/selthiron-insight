@@ -19,7 +19,7 @@ const Footer = () => {
           <img src={logo} alt="Selthiron" className="h-24 opacity-60 bg-transparent" />
         </button>
         <p className="text-sm text-muted-foreground">
-          © {new Date().getFullYear()} Selthiron. {t('copyright')}
+          © {new Date().getFullYear()} Selthiron. {t('footer.copyright')}
         </p>
       </div>
     </footer>

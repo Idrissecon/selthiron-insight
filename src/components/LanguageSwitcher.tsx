@@ -8,6 +8,7 @@ const LanguageSwitcher = () => {
   const toggleLanguage = () => {
     const newLang = i18n.language === 'en' ? 'es' : 'en';
     i18n.changeLanguage(newLang);
+    localStorage.setItem('preferred-language', newLang);
   };
 
   return (
@@ -16,6 +17,7 @@ const LanguageSwitcher = () => {
       size="sm"
       onClick={toggleLanguage}
       className="flex items-center gap-2"
+      aria-label="Switch language"
     >
       <Languages className="w-4 h-4" />
       {i18n.language === 'en' ? 'ES' : 'EN'}

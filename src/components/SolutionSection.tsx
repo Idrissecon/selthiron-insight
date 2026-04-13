@@ -8,20 +8,20 @@ const SolutionSection = () => {
     {
       icon: Upload,
       step: "01",
-      title: t('solution1Title'),
-      description: t('solution1Desc'),
+      title: t('solution.step1.title'),
+      description: t('solution.step1.description'),
     },
     {
       icon: GitCompareArrows,
       step: "02",
-      title: t('solution2Title'),
-      description: t('solution2Desc'),
+      title: t('solution.step2.title'),
+      description: t('solution.step2.description'),
     },
     {
       icon: ClipboardCheck,
       step: "03",
-      title: t('solution3Title'),
-      description: t('solution3Desc'),
+      title: t('solution.step3.title'),
+      description: t('solution.step3.description'),
     },
   ];
 

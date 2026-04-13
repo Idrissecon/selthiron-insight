@@ -28,7 +28,7 @@ const Navbar = () => {
             onClick={() => navigate("/tool")}
             className="text-primary hover:text-primary/80"
           >
-            {t('getStartedButton')}
+            {t('navbar.getStartedButton')}
           </Button>
         </div>
       </div>

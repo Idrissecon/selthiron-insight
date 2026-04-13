@@ -65,7 +65,7 @@ const Access = () => {
         navigate("/tool");
       }
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Authentication failed");
+      setError(err instanceof Error ? err.message : t('errors.uploadFailed'));
     } finally {
       setLoading(false);
     }
@@ -78,21 +78,21 @@ const Access = () => {
           <button onClick={handleLogoClick} className="cursor-pointer hover:opacity-80 transition-opacity mx-auto mb-8">
             <img src={logo} alt="Selthiron" className="h-20 bg-transparent" />
           </button>
-          <h1 className="text-2xl font-semibold mb-2">{isLogin ? t('welcomeBack') : t('createAccount')}</h1>
+          <h1 className="text-2xl font-semibold mb-2">{isLogin ? t('access.welcomeBack') : t('access.createAccount')}</h1>
           <p className="text-muted-foreground">
-            {isLogin ? t('signInToAccess') : t('signUpToStart')}
+            {isLogin ? t('access.signInToAccess') : t('access.signUpToStart')}
           </p>
         </div>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           {!isLogin && (
             <div className="space-y-2">
-              <label className="text-sm font-medium">{t('name')}</label>
+              <label className="text-sm font-medium">{t('access.name')}</label>
               <div className="relative">
                 <User className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
                 <Input
                   type="text"
-                  placeholder={t('yourName')}
+                  placeholder={t('access.yourName')}
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="pl-10"
@@ -102,12 +102,12 @@ const Access = () => {
           )}
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">{t('email')}</label>
+            <label className="text-sm font-medium">{t('access.email')}</label>
             <div className="relative">
               <Mail className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
               <Input
                 type="email"
-                placeholder={t('emailPlaceholder')}
+                placeholder={t('access.emailPlaceholder')}
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="pl-10"
@@ -117,12 +117,12 @@ const Access = () => {
           </div>
 
           <div className="space-y-2">
-            <label className="text-sm font-medium">{t('password')}</label>
+            <label className="text-sm font-medium">{t('access.password')}</label>
             <div className="relative">
               <Lock className="absolute left-3 top-3 w-4 h-4 text-muted-foreground" />
               <Input
                 type="password"
-                placeholder={t('passwordPlaceholder')}
+                placeholder={t('access.passwordPlaceholder')}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="pl-10"
@@ -139,7 +139,7 @@ const Access = () => {
           )}
 
           <Button type="submit" variant="hero" size="lg" className="w-full" disabled={loading}>
-            {loading ? t('processing') : isLogin ? t('signIn') : t('signUp')}
+            {loading ? t('access.processing') : isLogin ? t('common.signIn') : t('common.signUp')}
           </Button>
 
           <div className="text-center">
@@ -151,14 +151,14 @@ const Access = () => {
               }}
               className="text-sm text-muted-foreground hover:text-primary transition-colors"
             >
-              {isLogin ? t('dontHaveAccount') : t('alreadyHaveAccount')}
+              {isLogin ? t('access.dontHaveAccount') : t('access.alreadyHaveAccount')}
             </button>
           </div>
         </form>
 
         <div className="mt-8 flex items-center justify-center gap-2 text-xs text-muted-foreground">
           <Shield className="w-3.5 h-3.5" />
-          <span>{t('yourDataSecure')}</span>
+          <span>{t('access.yourDataSecure')}</span>
         </div>
       </div>
     </div>
