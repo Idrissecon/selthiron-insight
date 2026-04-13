@@ -35,7 +35,7 @@ const Access = () => {
       const { data: { session } } = await supabase.auth.getSession();
       const currentUser = session?.user;
 
-      // Always execute assign_results_to_user on authentication to clean up session_id and expires_at
+      // Always assign unassigned results to the user on authentication (strict discipline)
       if (currentUser) {
         const pendingSessionId = localStorage.getItem('pending_result_session_id');
         if (pendingSessionId) {
@@ -48,7 +48,6 @@ const Access = () => {
             localStorage.removeItem('pending_result_session_id');
           } catch (err) {
             console.error("Failed to assign results:", err);
-            // Continue anyway - don't block login flow
           }
         }
       }

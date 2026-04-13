@@ -35,9 +35,6 @@ CREATE TABLE IF NOT EXISTS public.reconciliations (
 -- Partial index on session_id for unassigned results (performance optimization)
 CREATE INDEX IF NOT EXISTS idx_reconciliations_session_id_unassigned ON public.reconciliations(session_id) WHERE user_id IS NULL;
 
--- Index on user_id for future optimization (can be added without downtime)
-CREATE INDEX IF NOT EXISTS idx_reconciliations_user_id ON public.reconciliations(user_id);
-
 -- Enable Row Level Security
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.reconciliations ENABLE ROW LEVEL SECURITY;
@@ -127,3 +124,39 @@ BEGIN
     AND expires_at < NOW();
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function to validate reconciliation write compliance (strict discipline)
+CREATE OR REPLACE FUNCTION public.validate_reconciliation_write()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Ensure exactly one of user_id or session_id is present (enforced by CHECK constraint)
+  -- If session_id is present, ensure expires_at is also present and within 15-30 minutes
+  IF NEW.session_id IS NOT NULL THEN
+    IF NEW.expires_at IS NULL THEN
+      RAISE EXCEPTION 'session_id requires expires_at for temporary tracking';
+    END IF;
+
+    IF NEW.expires_at > NOW() + INTERVAL '30 minutes' THEN
+      RAISE EXCEPTION 'expires_at must be within 30 minutes for temporary tracking';
+    END IF;
+
+    IF NEW.expires_at < NOW() + INTERVAL '15 minutes' THEN
+      RAISE EXCEPTION 'expires_at must be at least 15 minutes from now';
+    END IF;
+  END IF;
+
+  -- If user_id is present, ensure session_id and expires_at are NULL
+  IF NEW.user_id IS NOT NULL THEN
+    IF NEW.session_id IS NOT NULL OR NEW.expires_at IS NOT NULL THEN
+      RAISE EXCEPTION 'user_id cannot coexist with session_id or expires_at';
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Trigger to validate reconciliation writes
+CREATE TRIGGER validate_reconciliation_before_write
+  BEFORE INSERT OR UPDATE ON public.reconciliations
+  FOR EACH ROW EXECUTE FUNCTION public.validate_reconciliation_write();
