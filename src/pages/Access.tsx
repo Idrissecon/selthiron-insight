@@ -36,34 +36,18 @@ const Access = () => {
       const { data: { session } } = await supabase.auth.getSession();
       const currentUser = session?.user;
 
-      // If there's a report to save, save it to Supabase
-      if (report && currentUser) {
+      // Assign unassigned reports to the user
+      if (currentUser) {
         try {
-          // Save reconciliation results to database
-          const { error: recError } = await supabase
-            .from('reconciliations')
-            .insert({
-              total_bank: report.totalBank,
-              total_provider: report.totalProvider,
-              matched: report.matched,
-              unmatched: report.unmatched,
-              discrepancies: report.discrepancies,
-              match_rate: report.matchRate,
-              reconcilable_bank: report.reconcilableBank,
-              reconcilable_provider: report.reconcilableProvider,
-              results: report.results,
-              user_id: currentUser.id,
-            });
-
-          if (recError) throw recError;
-
-          // Navigate to Results with the report
-          navigate("/results", { state: { report } });
+          await supabase.rpc('assign_reports_to_user', { user_uuid: currentUser.id });
         } catch (err) {
-          console.error("Failed to save reconciliation:", err);
-          // Navigate to Results anyway even if save fails
-          navigate("/results", { state: { report } });
+          console.error("Failed to assign reports:", err);
         }
+      }
+
+      // Navigate to Results if there's a report, otherwise to Tool
+      if (report) {
+        navigate("/results", { state: { report } });
       } else {
         navigate("/tool");
       }

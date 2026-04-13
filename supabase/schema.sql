@@ -23,6 +23,8 @@ CREATE TABLE IF NOT EXISTS public.reconciliations (
   reconcilable_provider INTEGER NOT NULL,
   results JSONB NOT NULL,
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+  session_id TEXT, -- For tracking unassigned reports
+  expires_at TIMESTAMP WITH TIME ZONE, -- For auto-deletion of unassigned reports
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
 
@@ -34,6 +36,7 @@ CREATE TABLE IF NOT EXISTS public.files (
   content TEXT NOT NULL,
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
   reconciliation_id UUID REFERENCES public.reconciliations(id) ON DELETE SET NULL,
+  session_id TEXT, -- For tracking unassigned files
   created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
 );
 
@@ -57,7 +60,7 @@ CREATE POLICY "Users can view own files" ON public.files
   FOR SELECT USING (auth.uid() = user_id);
 
 CREATE POLICY "Users can insert own files" ON public.files
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
 
 CREATE POLICY "Users can update own files" ON public.files
   FOR UPDATE USING (auth.uid() = user_id);
@@ -70,7 +73,10 @@ CREATE POLICY "Users can view own reconciliations" ON public.reconciliations
   FOR SELECT USING (auth.uid() = user_id);
 
 CREATE POLICY "Users can insert own reconciliations" ON public.reconciliations
-  FOR INSERT WITH CHECK (auth.uid() = user_id);
+  FOR INSERT WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
+
+CREATE POLICY "Users can update own reconciliations" ON public.reconciliations
+  FOR UPDATE USING (auth.uid() = user_id);
 
 -- Function to create profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
@@ -99,3 +105,54 @@ $$ LANGUAGE plpgsql;
 CREATE TRIGGER handle_profiles_updated_at
   BEFORE UPDATE ON public.profiles
   FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
+
+-- Function to assign unassigned reports to user on authentication
+CREATE OR REPLACE FUNCTION public.assign_reports_to_user(user_uuid UUID)
+RETURNS VOID AS $$
+BEGIN
+  -- Update unassigned reconciliations with matching session_id
+  UPDATE public.reconciliations
+  SET user_id = user_uuid,
+      session_id = NULL,
+      expires_at = NULL
+  WHERE user_id IS NULL
+    AND session_id IN (
+      SELECT DISTINCT session_id
+      FROM public.reconciliations
+      WHERE user_id IS NULL
+      ORDER BY created_at DESC
+      LIMIT 1
+    );
+
+  -- Update unassigned files with matching session_id
+  UPDATE public.files
+  SET user_id = user_uuid,
+      session_id = NULL
+  WHERE user_id IS NULL
+    AND session_id IN (
+      SELECT DISTINCT session_id
+      FROM public.reconciliations
+      WHERE user_id IS NULL
+      ORDER BY created_at DESC
+      LIMIT 1
+    );
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Function to cleanup expired unassigned reports
+CREATE OR REPLACE FUNCTION public.cleanup_expired_reports()
+RETURNS VOID AS $$
+BEGIN
+  -- Delete expired files
+  DELETE FROM public.files
+  WHERE user_id IS NULL
+    AND expires_at IS NOT NULL
+    AND expires_at < NOW();
+
+  -- Delete expired reconciliations
+  DELETE FROM public.reconciliations
+  WHERE user_id IS NULL
+    AND expires_at IS NOT NULL
+    AND expires_at < NOW();
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
