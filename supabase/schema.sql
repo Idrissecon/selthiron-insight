@@ -54,7 +54,10 @@ CREATE POLICY "Users can view own reconciliations" ON public.reconciliations
   FOR SELECT USING (auth.uid() = user_id);
 
 CREATE POLICY "Anonymous users can view own reconciliations by session_id" ON public.reconciliations
-  FOR SELECT USING (auth.uid() IS NULL AND session_id IS NOT NULL);
+  FOR SELECT USING (
+    auth.uid() IS NULL AND 
+    session_id = current_setting('request.jwt.claim.session_id', true)::uuid
+  );
 
 CREATE POLICY "Users can insert own reconciliations" ON public.reconciliations
   FOR INSERT WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
