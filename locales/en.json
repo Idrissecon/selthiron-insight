@@ -17,6 +17,8 @@
   "problem": {
     "title": "The reconciliation problem",
     "description": "Small businesses lose time and money every month to manual financial reconciliation.",
+    "header": "The reconciliation problem",
+    "subtitle": "Small businesses lose time and money every month to manual financial reconciliation.",
     "problem1": {
       "title": "Manual reconciliation is slow",
       "description": "Hours spent cross-referencing bank statements with payment provider exports, line by line."
@@ -32,6 +34,7 @@
   },
   "benefits": {
     "title": "Why Selthiron",
+    "header": "Why Selthiron",
     "benefit1": {
       "title": "Save hours",
       "description": "What used to take half a day now takes minutes."
@@ -52,6 +55,8 @@
   "solution": {
     "title": "How it works",
     "description": "Three steps. No setup. No account required.",
+    "header": "How it works",
+    "subtitle": "Three steps. No setup. No account required.",
     "step1": {
       "title": "Upload",
       "description": "Drop your bank CSV and payment provider CSV into Selthiron."
@@ -67,7 +72,9 @@
   },
   "preview": {
     "title": "See it in action",
-    "description": "A clear, instant overview of your reconciliation results."
+    "description": "A clear, instant overview of your reconciliation results.",
+    "header": "See it in action",
+    "subtitle": "A clear, instant overview of your reconciliation results."
   },
   "access": {
     "welcomeBack": "Welcome back",
@@ -124,7 +131,9 @@
     "signInToSaveDesc": "Sign in to save this reconciliation to your history.",
     "close": "Close",
     "reconciliationSaved": "Reconciliation saved to your history.",
-    "providerOnly": "Provider only"
+    "providerOnly": "Provider only",
+    "bankTransactions": "bank transactions",
+    "providerTransactions": "provider transactions"
   },
   "history": {
     "title": "Reconciliation History",
@@ -132,7 +141,8 @@
     "noHistory": "No reconciliation history yet.",
     "startFirst": "Start your first reconciliation to see it here.",
     "loadingHistory": "Loading history...",
-    "startReconciliation": "Start reconciliation"
+    "startReconciliation": "Start reconciliation",
+    "emptyStateMessage": "Start by uploading your first bank statement and provider export."
   },
   "footer": {
     "copyright": "Privacy-first financial reconciliation."

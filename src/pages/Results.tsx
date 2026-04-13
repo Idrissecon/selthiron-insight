@@ -7,12 +7,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 
-const statusConfig = {
-  matched: { icon: CheckCircle2, label: "Matched", className: "text-success", bg: "bg-success/10" },
-  unmatched: { icon: XCircle, label: "Unmatched", className: "text-destructive", bg: "bg-destructive/10" },
-  discrepancy: { icon: AlertTriangle, label: "Discrepancy", className: "text-warning", bg: "bg-warning/10" },
-};
-
 const Results = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -20,6 +14,12 @@ const Results = () => {
   const { t } = useTranslation();
   const report = location.state?.report as ReconciliationReport | undefined;
   const [showLoginModal, setShowLoginModal] = useState(false);
+
+  const statusConfig = {
+    matched: { icon: CheckCircle2, label: t('status.matched'), className: "text-success", bg: "bg-success/10" },
+    unmatched: { icon: XCircle, label: t('status.unmatched'), className: "text-destructive", bg: "bg-destructive/10" },
+    discrepancy: { icon: AlertTriangle, label: t('status.discrepancy'), className: "text-warning", bg: "bg-warning/10" },
+  };
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -97,7 +97,7 @@ const Results = () => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-semibold mb-2">{t('results.title')}</h1>
-            <p className="text-sm text-muted-foreground">{t('results.totalBank')} {report.totalBank} bank transactions · {report.totalProvider} provider transactions</p>
+            <p className="text-sm text-muted-foreground">{t('results.totalBank')} {report.totalBank} {t('results.bankTransactions')} · {report.totalProvider} {t('results.providerTransactions')}</p>
           </div>
           <Button variant="outline" size="sm" onClick={exportCSV}>
             <Download className="w-4 h-4 mr-1" />
@@ -128,7 +128,7 @@ const Results = () => {
           </div>
           <div className="divide-y max-h-[500px] overflow-y-auto">
             {report.results.map((r, i) => (
-              <ResultRow key={i} result={r} />
+              <ResultRow key={i} result={r} statusConfig={statusConfig} t={t} />
             ))}
           </div>
         </div>
@@ -185,7 +185,7 @@ const SummaryCard = ({
   </div>
 );
 
-const ResultRow = ({ result }: { result: MatchResult }) => {
+const ResultRow = ({ result, statusConfig, t }: { result: MatchResult; statusConfig: any; t: any }) => {
   const config = statusConfig[result.status];
   const Icon = config.icon;
 
@@ -194,7 +194,7 @@ const ResultRow = ({ result }: { result: MatchResult }) => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-[100px_1fr_110px_110px_100px] gap-2 md:gap-4 px-6 py-4 text-sm hover:bg-surface transition-colors bg-destructive/5">
         <span className="text-muted-foreground">—</span>
-        <span className="font-medium truncate text-muted-foreground italic">Provider only</span>
+        <span className="font-medium truncate text-muted-foreground italic">{t('results.providerOnly')}</span>
         <span className="text-right font-mono text-muted-foreground">—</span>
         <span className="text-right font-mono text-destructive">${Math.abs(result.providerTx.amount).toFixed(2)}</span>
         <span className={`flex items-center md:justify-end gap-1.5 ${config.className}`}>

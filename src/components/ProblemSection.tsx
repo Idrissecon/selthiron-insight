@@ -26,10 +26,10 @@ const ProblemSection = () => {
     <section className="py-20 bg-surface">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-4">
-          The reconciliation problem
+          {t('problem.header')}
         </h2>
         <p className="text-muted-foreground text-center max-w-xl mx-auto mb-16">
-          Small businesses lose time and money every month to manual financial reconciliation.
+          {t('problem.subtitle')}
         </p>
         <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
           {problems.map((problem) => (

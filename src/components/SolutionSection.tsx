@@ -29,10 +29,10 @@ const SolutionSection = () => {
     <section className="py-20">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-4">
-          How it works
+          {t('solution.header')}
         </h2>
         <p className="text-muted-foreground text-center max-w-xl mx-auto mb-16">
-          Three steps. No setup. No account required.
+          {t('solution.subtitle')}
         </p>
         <div className="grid md:grid-cols-3 gap-12 max-w-4xl mx-auto">
           {steps.map((step, i) => (

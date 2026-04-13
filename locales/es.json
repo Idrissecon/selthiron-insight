@@ -17,6 +17,8 @@
   "problem": {
     "title": "El problema del cuadre",
     "description": "Las pequeñas empresas pierden tiempo y dinero cada mes en el cuadre financiero manual.",
+    "header": "El problema del cuadre",
+    "subtitle": "Las pequeñas empresas pierden tiempo y dinero cada mes en el cuadre financiero manual.",
     "problem1": {
       "title": "El cuadre manual es lento",
       "description": "Horas dedicadas a cruzar estados bancarios con exportaciones de proveedores de pagos, línea por línea."
@@ -32,6 +34,7 @@
   },
   "benefits": {
     "title": "Por qué Selthiron",
+    "header": "Por qué Selthiron",
     "benefit1": {
       "title": "Ahorre horas",
       "description": "Lo que solía tomar medio día ahora toma minutos."
@@ -52,6 +55,8 @@
   "solution": {
     "title": "Cómo funciona",
     "description": "Tres pasos. Sin configuración. Sin cuenta requerida.",
+    "header": "Cómo funciona",
+    "subtitle": "Tres pasos. Sin configuración. Sin cuenta requerida.",
     "step1": {
       "title": "Cargar",
       "description": "Arrastre su CSV bancario y el CSV del proveedor de pagos a Selthiron."
@@ -67,7 +72,9 @@
   },
   "preview": {
     "title": "Véalo en acción",
-    "description": "Una visión clara e instantánea de sus resultados de cuadre."
+    "description": "Una visión clara e instantánea de sus resultados de cuadre.",
+    "header": "Véalo en acción",
+    "subtitle": "Una visión clara e instantánea de sus resultados de cuadre."
   },
   "access": {
     "welcomeBack": "Bienvenido de nuevo",
@@ -124,7 +131,9 @@
     "signInToSaveDesc": "Inicie sesión para guardar este cuadre en su historial.",
     "close": "Cerrar",
     "reconciliationSaved": "Cuadre guardado en su historial.",
-    "providerOnly": "Solo proveedor"
+    "providerOnly": "Solo proveedor",
+    "bankTransactions": "transacciones bancarias",
+    "providerTransactions": "transacciones del proveedor"
   },
   "history": {
     "title": "Historial de Cuadres",
@@ -132,7 +141,8 @@
     "noHistory": "Aún no hay historial de cuadres.",
     "startFirst": "Inicie su primer cuadre para verlo aquí.",
     "loadingHistory": "Cargando historial...",
-    "startReconciliation": "Iniciar cuadre"
+    "startReconciliation": "Iniciar cuadre",
+    "emptyStateMessage": "Comience cargando su primer estado bancario y exportación de proveedor."
   },
   "footer": {
     "copyright": "Cuadre financiero con privacidad primero."

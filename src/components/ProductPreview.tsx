@@ -22,10 +22,10 @@ const ProductPreview = () => {
     <section className="py-20">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-4">
-          See it in action
+          {t('preview.header')}
         </h2>
         <p className="text-muted-foreground text-center max-w-xl mx-auto mb-12">
-          A clear, instant overview of your reconciliation results.
+          {t('preview.subtitle')}
         </p>
         <div className="max-w-3xl mx-auto bg-surface-elevated border rounded-xl shadow-lg overflow-hidden">
           <div className="p-6 border-b bg-surface">

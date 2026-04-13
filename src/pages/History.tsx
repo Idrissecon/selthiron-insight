@@ -92,7 +92,7 @@ const History = () => {
             <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">{t('history.noHistory')}</h3>
             <p className="text-sm text-muted-foreground mb-6">
-              Start by uploading your first bank statement and provider export.
+              {t('history.emptyStateMessage')}
             </p>
             <Button onClick={() => navigate("/tool")}>{t('history.startReconciliation')}</Button>
           </div>

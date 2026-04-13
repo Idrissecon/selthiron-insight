@@ -15,7 +15,7 @@ const BenefitsSection = () => {
     <section className="py-20 bg-surface">
       <div className="container mx-auto px-6">
         <h2 className="text-3xl md:text-4xl font-semibold text-center mb-16">
-          Why Selthiron
+          {t('benefits.header')}
         </h2>
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
           {benefits.map((b) => (
