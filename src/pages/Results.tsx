@@ -1,8 +1,9 @@
 import { useLocation, useNavigate, Navigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { CheckCircle2, XCircle, AlertTriangle, ArrowLeft, Download } from "lucide-react";
+import { CheckCircle2, XCircle, AlertTriangle, ArrowLeft, Download, Shield } from "lucide-react";
 import logo from "@/assets/selthiron-logo.png";
 import type { ReconciliationReport, MatchResult } from "@/lib/reconciliation";
+import { useAuth } from "@/contexts/AuthContext";
 
 const statusConfig = {
   matched: { icon: CheckCircle2, label: "Matched", className: "text-success", bg: "bg-success/10" },
@@ -13,6 +14,7 @@ const statusConfig = {
 const Results = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { isAuthenticated } = useAuth();
   const report = location.state?.report as ReconciliationReport | undefined;
 
   if (!report) return <Navigate to="/tool" replace />;
@@ -102,9 +104,25 @@ const Results = () => {
         </div>
 
         <div className="mt-8 text-center">
-          <p className="text-xs text-muted-foreground">
-            This reconciliation has been saved to your account history.
-          </p>
+          {isAuthenticated ? (
+            <p className="text-xs text-muted-foreground">
+              This reconciliation has been saved to your account history.
+            </p>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-xs text-muted-foreground">
+                Sign in to save this reconciliation to your history.
+              </p>
+              <Button
+                variant="outline"
+                size="sm"
+                onClick={() => navigate("/access")}
+              >
+                <Shield className="w-4 h-4 mr-2" />
+                Sign in to save
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     </div>

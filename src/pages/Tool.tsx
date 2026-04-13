@@ -14,12 +14,7 @@ const Tool = () => {
   const [providerFile, setProviderFile] = useState<File | null>(null);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/access");
-    }
-  }, [isAuthenticated, navigate]);
+  const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
   const handleDrop = useCallback(
     (setter: (f: File) => void) => (e: React.DragEvent) => {
@@ -36,45 +31,17 @@ const Tool = () => {
   };
 
   const handleReconcile = async () => {
-    if (!bankFile || !providerFile || !user) return;
+    if (!bankFile || !providerFile) return;
     setProcessing(true);
     setError("");
 
     try {
-      // Upload files to Supabase Storage
+      // Process locally for results display
       const [bankText, providerText] = await Promise.all([
         bankFile.text(),
         providerFile.text(),
       ]);
 
-      // Save files to database
-      const { data: bankFileData, error: bankError } = await supabase
-        .from('files')
-        .insert({
-          filename: bankFile.name,
-          type: 'bank',
-          content: bankText,
-          user_id: user.id,
-        })
-        .select()
-        .single();
-
-      if (bankError) throw bankError;
-
-      const { data: providerFileData, error: providerError } = await supabase
-        .from('files')
-        .insert({
-          filename: providerFile.name,
-          type: 'provider',
-          content: providerText,
-          user_id: user.id,
-        })
-        .select()
-        .single();
-
-      if (providerError) throw providerError;
-
-      // Process locally for results display
       const bankTxs = parseTransactions(bankText);
       const providerTxs = parseTransactions(providerText);
 
@@ -83,24 +50,60 @@ const Tool = () => {
 
       const report = reconcile(bankTxs, providerTxs);
 
-      // Save reconciliation results to database
-      const { error: recError } = await supabase
-        .from('reconciliations')
-        .insert({
-          total_bank: report.totalBank,
-          total_provider: report.totalProvider,
-          matched: report.matched,
-          unmatched: report.unmatched,
-          discrepancies: report.discrepancies,
-          match_rate: report.matchRate,
-          reconcilable_bank: report.reconcilableBank,
-          reconcilable_provider: report.reconcilableProvider,
-          results: report.results,
-          user_id: user.id,
-        });
+      // Save to Supabase if authenticated
+      if (isAuthenticated && user) {
+        try {
+          // Save files to database
+          const { data: bankFileData, error: bankError } = await supabase
+            .from('files')
+            .insert({
+              filename: bankFile.name,
+              type: 'bank',
+              content: bankText,
+              user_id: user.id,
+            })
+            .select()
+            .single();
 
-      if (recError) throw recError;
+          if (bankError) throw bankError;
 
+          const { data: providerFileData, error: providerError } = await supabase
+            .from('files')
+            .insert({
+              filename: providerFile.name,
+              type: 'provider',
+              content: providerText,
+              user_id: user.id,
+            })
+            .select()
+            .single();
+
+          if (providerError) throw providerError;
+
+          // Save reconciliation results to database
+          const { error: recError } = await supabase
+            .from('reconciliations')
+            .insert({
+              total_bank: report.totalBank,
+              total_provider: report.totalProvider,
+              matched: report.matched,
+              unmatched: report.unmatched,
+              discrepancies: report.discrepancies,
+              match_rate: report.matchRate,
+              reconcilable_bank: report.reconcilableBank,
+              reconcilable_provider: report.reconcilableProvider,
+              results: report.results,
+              user_id: user.id,
+            });
+
+          if (recError) throw recError;
+        } catch (err) {
+          // If saving fails, continue to results anyway
+          console.error("Failed to save to Supabase:", err);
+        }
+      }
+
+      // Navigate to results
       navigate("/results", { state: { report } });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
@@ -159,28 +162,42 @@ const Tool = () => {
         <div className="container mx-auto flex items-center justify-between h-14 px-6">
           <img src={logo} alt="Selthiron" className="h-6" />
           <div className="flex items-center gap-4">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={() => navigate("/history")}
-              className="text-xs"
-            >
-              <Clock className="w-3.5 h-3.5 mr-2" />
-              History
-            </Button>
-            <div className="flex items-center gap-2 text-xs text-muted-foreground">
-              <Shield className="w-3.5 h-3.5" />
-              <span>{user?.email}</span>
-            </div>
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={logout}
-              className="text-xs"
-            >
-              <LogOut className="w-3.5 h-3.5 mr-2" />
-              Sign out
-            </Button>
+            {isAuthenticated ? (
+              <>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => navigate("/history")}
+                  className="text-xs"
+                >
+                  <Clock className="w-3.5 h-3.5 mr-2" />
+                  History
+                </Button>
+                <div className="flex items-center gap-2 text-xs text-muted-foreground">
+                  <Shield className="w-3.5 h-3.5" />
+                  <span>{user?.email}</span>
+                </div>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={logout}
+                  className="text-xs"
+                >
+                  <LogOut className="w-3.5 h-3.5 mr-2" />
+                  Sign out
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="ghost"
+                size="sm"
+                onClick={() => navigate("/access")}
+                className="text-xs"
+              >
+                <Shield className="w-3.5 h-3.5 mr-2" />
+                Sign in
+              </Button>
+            )}
           </div>
         </div>
       </div>
@@ -236,8 +253,7 @@ const Tool = () => {
 
         <div className="mt-12 p-4 bg-surface rounded-lg border">
           <p className="text-xs text-muted-foreground text-center">
-            <strong>Privacy notice:</strong> Your files are securely uploaded and stored in our database.
-            Your data is associated with your account and persists across sessions.
+            <strong>Privacy notice:</strong> Your files are processed locally in your browser. Sign in to save reconciliations to your history.
           </p>
         </div>
       </div>
