@@ -1,14 +1,18 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Shield, Mail, Lock, User } from "lucide-react";
 import logo from "@/assets/selthiron-logo.png";
 import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/lib/supabase";
+import type { ReconciliationReport } from "@/lib/reconciliation";
 
 const Access = () => {
   const navigate = useNavigate();
-  const { login, signup } = useAuth();
+  const location = useLocation();
+  const { login, signup, user } = useAuth();
+  const report = location.state?.report as ReconciliationReport | undefined;
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -27,7 +31,38 @@ const Access = () => {
       } else {
         await signup(email, password, name);
       }
-      navigate("/tool");
+
+      // If there's a report to save, save it to Supabase
+      if (report && user) {
+        try {
+          // Save reconciliation results to database
+          const { error: recError } = await supabase
+            .from('reconciliations')
+            .insert({
+              total_bank: report.totalBank,
+              total_provider: report.totalProvider,
+              matched: report.matched,
+              unmatched: report.unmatched,
+              discrepancies: report.discrepancies,
+              match_rate: report.matchRate,
+              reconcilable_bank: report.reconcilableBank,
+              reconcilable_provider: report.reconcilableProvider,
+              results: report.results,
+              user_id: user.id,
+            });
+
+          if (recError) throw recError;
+
+          // Navigate to Results with the report
+          navigate("/results", { state: { report } });
+        } catch (err) {
+          console.error("Failed to save reconciliation:", err);
+          // Navigate to Results anyway even if save fails
+          navigate("/results", { state: { report } });
+        }
+      } else {
+        navigate("/tool");
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "Authentication failed");
     } finally {

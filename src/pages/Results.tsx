@@ -67,7 +67,7 @@ const Results = () => {
               <Button
                 variant="outline"
                 size="sm"
-                onClick={() => navigate("/access")}
+                onClick={() => navigate("/access", { state: { report } })}
               >
                 <Shield className="w-4 h-4 mr-2" />
                 Sign in to save
