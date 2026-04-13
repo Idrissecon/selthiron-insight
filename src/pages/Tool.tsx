@@ -55,7 +55,7 @@ const Tool = () => {
 
       // Save results to Supabase (always, but with session_id if not authenticated)
       try {
-        const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15 minutes from now (strict discipline)
+        const expiresAt = new Date(Date.now() + 16 * 60 * 1000).toISOString(); // 16 minutes from now (margin for network delay)
 
         // Save session_id to localStorage for later assignment
         localStorage.setItem('pending_result_session_id', sessionId);
