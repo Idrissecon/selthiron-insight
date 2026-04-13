@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS public.reconciliations (
   )
 );
 
--- Index on session_id for performance
-CREATE INDEX IF NOT EXISTS idx_reconciliations_session_id ON public.reconciliations(session_id);
+-- Partial index on session_id for unassigned results (performance optimization)
+CREATE INDEX IF NOT EXISTS idx_reconciliations_session_id_unassigned ON public.reconciliations(session_id) WHERE user_id IS NULL;
 
 -- Enable Row Level Security
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
@@ -60,10 +60,16 @@ CREATE POLICY "Anonymous users can view own reconciliations by session_id" ON pu
   );
 
 CREATE POLICY "Users can insert own reconciliations" ON public.reconciliations
-  FOR INSERT WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
+  FOR INSERT WITH CHECK (
+    (auth.uid() = user_id) OR
+    (user_id IS NULL AND session_id = current_setting('request.jwt.claim.session_id', true)::uuid)
+  );
 
 CREATE POLICY "Users can update own reconciliations" ON public.reconciliations
   FOR UPDATE USING (auth.uid() = user_id);
+
+CREATE POLICY "Users can delete own reconciliations" ON public.reconciliations
+  FOR DELETE USING (auth.uid() = user_id);
 
 -- Function to create profile on signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
