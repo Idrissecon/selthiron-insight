@@ -99,7 +99,6 @@ const Results = () => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-semibold mb-2">{t('results.title')}</h1>
-            <p className="text-sm text-muted-foreground">{t('results.totalBank')}: {report.totalBank} · {t('results.totalProvider')}: {report.totalProvider}</p>
           </div>
           <Button variant="outline" size="sm" onClick={exportCSV}>
             <Download className="w-4 h-4 mr-1" />
