@@ -14,7 +14,7 @@ const Footer = () => {
     <footer className="py-16 border-t">
       <div className="container mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-4">
         <button onClick={handleLogoClick} className="cursor-pointer hover:opacity-80 transition-opacity">
-          <img src={logo} alt="Selthiron" className="h-16 opacity-60" />
+          <img src={logo} alt="Selthiron" className="h-24 opacity-60" />
         </button>
         <p className="text-sm text-muted-foreground">
           © {new Date().getFullYear()} Selthiron. Privacy-first financial reconciliation.

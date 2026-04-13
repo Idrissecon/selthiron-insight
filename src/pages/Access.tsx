@@ -74,7 +74,7 @@ const Access = () => {
       <div className="w-full max-w-md">
         <div className="text-center mb-10">
           <button onClick={handleLogoClick} className="cursor-pointer hover:opacity-80 transition-opacity mx-auto mb-8">
-            <img src={logo} alt="Selthiron" className="h-16" />
+            <img src={logo} alt="Selthiron" className="h-20" />
           </button>
           <h1 className="text-2xl font-semibold mb-2">{isLogin ? "Welcome back" : "Create account"}</h1>
           <p className="text-muted-foreground">

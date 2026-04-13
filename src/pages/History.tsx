@@ -70,7 +70,7 @@ const History = () => {
       <div className="border-b">
         <div className="container mx-auto flex items-center justify-between h-14 px-6">
           <button onClick={() => navigate("/tool")} className="cursor-pointer hover:opacity-80 transition-opacity">
-            <img src={logo} alt="Selthiron" className="h-12" />
+            <img src={logo} alt="Selthiron" className="h-20" />
           </button>
           <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
             <ArrowLeft className="w-4 h-4 mr-1" />
