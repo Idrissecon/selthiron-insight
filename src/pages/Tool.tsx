@@ -74,7 +74,7 @@ const Tool = () => {
             reconcilable_provider: report.reconcilableProvider,
             results: report.results,
             user_id: isAuthenticated && user ? user.id : null,
-            session_id: sessionId,
+            session_id: isAuthenticated ? null : sessionId,
             expires_at: isAuthenticated ? null : expiresAt,
           });
 
