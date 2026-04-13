@@ -76,6 +76,12 @@
     "header": "See it in action",
     "subtitle": "A clear, instant overview of your reconciliation results."
   },
+  "finalCTA": {
+    "title": "Try Selthiron for free",
+    "description": "Upload your files, get your reconciliation report. No account needed.",
+    "button": "Start reconciling",
+    "privacy": "We process your data temporarily and delete it immediately after use."
+  },
   "access": {
     "welcomeBack": "Welcome back",
     "createAccount": "Create account",

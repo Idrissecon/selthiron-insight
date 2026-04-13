@@ -76,6 +76,12 @@
     "header": "Véalo en acción",
     "subtitle": "Una visión clara e instantánea de sus resultados de cuadre."
   },
+  "finalCTA": {
+    "title": "Pruebe Selthiron gratis",
+    "description": "Cargue sus archivos, obtenga su informe de cuadre. No se necesita cuenta.",
+    "button": "Iniciar cuadre",
+    "privacy": "Procesamos sus datos temporalmente y los eliminamos inmediatamente después del uso."
+  },
   "access": {
     "welcomeBack": "Bienvenido de nuevo",
     "createAccount": "Crear cuenta",
