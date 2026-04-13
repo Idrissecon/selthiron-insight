@@ -224,7 +224,7 @@ const History = () => {
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div>
                     <p className="text-muted-foreground text-xs">{t('history.matchRate')}</p>
-                    <p className={`font-semibold ${
+                    <p className={`font-metric ${
                       rec.match_rate >= 80 ? 'text-success' :
                       rec.match_rate >= 50 ? 'text-warning' :
                       'text-destructive'
@@ -234,15 +234,15 @@ const History = () => {
                   </div>
                   <div>
                     <p className="text-muted-foreground text-xs">{t('history.matched')}</p>
-                    <p className="font-semibold">{rec.matched || 0}</p>
+                    <p className="font-metric">{rec.matched || 0}</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground text-xs">{t('history.unmatched')}</p>
-                    <p className="font-semibold text-destructive">{rec.unmatched || 0}</p>
+                    <p className="font-metric text-destructive">{rec.unmatched || 0}</p>
                   </div>
                   <div>
                     <p className="text-muted-foreground text-xs">{t('history.discrepancies')}</p>
-                    <p className="font-semibold text-warning">{rec.discrepancies || 0}</p>
+                    <p className="font-metric text-warning">{rec.discrepancies || 0}</p>
                   </div>
                 </div>
               </div>

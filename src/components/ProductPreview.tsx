@@ -33,15 +33,15 @@ const ProductPreview = () => {
               <div className="flex gap-3">
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-success/10 rounded-md">
                   <CheckCircle2 className="w-4 h-4 text-success" />
-                  <span className="text-sm font-medium">3 {t('status.matched')}</span>
+                  <span className="text-sm font-metric">3 {t('status.matched')}</span>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-destructive/10 rounded-md">
                   <XCircle className="w-4 h-4 text-destructive" />
-                  <span className="text-sm font-medium">1 {t('status.unmatched')}</span>
+                  <span className="text-sm font-metric">1 {t('status.unmatched')}</span>
                 </div>
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-warning/10 rounded-md">
                   <AlertTriangle className="w-4 h-4 text-warning" />
-                  <span className="text-sm font-medium">1 {t('status.discrepancy')}</span>
+                  <span className="text-sm font-metric">1 {t('status.discrepancy')}</span>
                 </div>
               </div>
             </div>
