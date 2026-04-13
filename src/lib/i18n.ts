@@ -62,7 +62,9 @@ const resources = {
       noFileSelected: 'No file selected',
       uploadFile: 'Upload file',
       processingFiles: 'Processing files...',
-      privacyNotice: 'Your files are processed locally. Only reconciliation results are saved.',
+      privacyNotice: 'Privacy',
+      privacyNoticeDescription: 'Your files are processed locally. Only reconciliation results are saved.',
+      bankPaymentReconciliation: 'Bank & Payment Reconciliation',
       
       // Results
       reconciliationResults: 'Reconciliation Results',
@@ -86,6 +88,8 @@ const resources = {
       historyDesc: 'View your past reconciliations and download reports.',
       noHistory: 'No reconciliation history yet.',
       startFirst: 'Start your first reconciliation to see it here.',
+      loadingHistory: 'Loading history...',
+      reconciliationSaved: 'Reconciliation saved to your history.',
       
       // Footer
       copyright: 'Privacy-first financial reconciliation.',
@@ -133,7 +137,9 @@ const resources = {
       noFileSelected: 'Ningún archivo seleccionado',
       uploadFile: 'Subir archivo',
       processingFiles: 'Procesando archivos...',
-      privacyNotice: 'Tus archivos se procesan localmente. Solo se guardan los resultados de la reconciliación.',
+      privacyNotice: 'Privacidad',
+      privacyNoticeDescription: 'Tus archivos se procesan localmente. Solo se guardan los resultados de la reconciliación.',
+      bankPaymentReconciliation: 'Reconciliación Bancaria y de Pagos',
       
       // Results
       reconciliationResults: 'Resultados de Reconciliación',
@@ -157,6 +163,8 @@ const resources = {
       historyDesc: 'Visualiza tus reconciliaciones pasadas y descarga informes.',
       noHistory: 'Aún no hay historial de reconciliaciones.',
       startFirst: 'Inicia tu primera reconciliación para verla aquí.',
+      loadingHistory: 'Cargando historial...',
+      reconciliationSaved: 'Reconciliación guardada en tu historial.',
       
       // Footer
       copyright: 'Reconciliación financiera con privacidad primero.',

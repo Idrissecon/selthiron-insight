@@ -5,11 +5,13 @@ import { Upload, FileText, ArrowRight, Shield, Loader2, LogOut, Clock } from "lu
 import logo from "@/assets/selthiron-logo.png";
 import { parseTransactions, reconcile, type ReconciliationReport } from "@/lib/reconciliation";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/lib/supabase";
 
 const Tool = () => {
   const navigate = useNavigate();
   const { user, logout, isAuthenticated } = useAuth();
+  const { t } = useTranslation();
   const [bankFile, setBankFile] = useState<File | null>(null);
   const [providerFile, setProviderFile] = useState<File | null>(null);
   const [processing, setProcessing] = useState(false);
@@ -156,7 +158,7 @@ const Tool = () => {
                   className="text-xs"
                 >
                   <Clock className="w-3.5 h-3.5 mr-2" />
-                  History
+                  {t('reconciliationHistory')}
                 </Button>
                 <div className="flex items-center gap-2 text-xs text-muted-foreground">
                   <Shield className="w-3.5 h-3.5" />
@@ -169,7 +171,7 @@ const Tool = () => {
                   className="text-xs"
                 >
                   <LogOut className="w-3.5 h-3.5 mr-2" />
-                  Sign out
+                  {t('signOut')}
                 </Button>
               </>
             ) : (
@@ -179,8 +181,8 @@ const Tool = () => {
                 onClick={() => navigate("/access")}
                 className="text-xs"
               >
-                <Shield className="w-3.5 h-3.5 mr-2" />
-                Sign in
+                <Shield className="w-4 h-4 mr-2" />
+                {t('signIn')}
               </Button>
             )}
           </div>
@@ -188,9 +190,9 @@ const Tool = () => {
       </div>
 
       <div className="container mx-auto px-6 py-16 max-w-2xl">
-        <h1 className="text-2xl font-semibold mb-2">Upload your files</h1>
-        <p className="text-muted-foreground mb-10">
-          Upload your bank statement and payment provider export to begin reconciliation.
+        <h1 className="text-2xl font-semibold mb-2">{t('bankPaymentReconciliation')}</h1>
+        <p className="text-muted-foreground mb-6">
+          {t('heroSubtitle')}
         </p>
 
         {error && (
@@ -201,12 +203,12 @@ const Tool = () => {
 
         <div className="space-y-6">
           <div>
-            <label className="text-sm font-medium mb-2 block">Bank Statement (CSV)</label>
+            <label className="text-sm font-medium mb-2 block">{t('uploadBank')}</label>
             <FileDropZone label="Drop your bank CSV here" file={bankFile} setter={setBankFile} id="bank-file" />
           </div>
 
           <div>
-            <label className="text-sm font-medium mb-2 block">Payment Provider (CSV)</label>
+            <label className="text-sm font-medium mb-2 block">{t('uploadProvider')}</label>
             <FileDropZone
               label="Drop your Stripe / PayPal CSV here"
               file={providerFile}
@@ -216,21 +218,21 @@ const Tool = () => {
           </div>
 
           <Button
+            type="submit"
             variant="hero"
             size="lg"
             className="w-full"
             disabled={!bankFile || !providerFile || processing}
-            onClick={handleReconcile}
           >
             {processing ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin" />
-                Processing...
+                <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                {t('processingFiles')}
               </>
             ) : (
               <>
-                Reconcile
-                <ArrowRight className="w-4 h-4" />
+                {t('reconcile')}
+                <ArrowRight className="w-4 h-4 ml-2" />
               </>
             )}
           </Button>
@@ -238,7 +240,7 @@ const Tool = () => {
 
         <div className="mt-12 p-4 bg-surface rounded-lg border">
           <p className="text-xs text-muted-foreground text-center">
-            <strong>Privacy notice:</strong> Your files are processed locally in your browser. Results are saved temporarily and assigned to your account when you sign in.
+            <strong>{t('privacyNotice')}:</strong> {t('privacyNoticeDescription')}
           </p>
         </div>
       </div>

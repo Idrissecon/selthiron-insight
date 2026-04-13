@@ -5,10 +5,12 @@ import { Clock, CheckCircle2, AlertTriangle, ArrowLeft, Eye } from "lucide-react
 import logo from "@/assets/selthiron-logo.png";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabase";
+import { useTranslation } from "react-i18next";
 
 const History = () => {
   const navigate = useNavigate();
-  const { user } = useAuth();
+  const { user, isAuthenticated } = useAuth();
+  const { t } = useTranslation();
   const [reconciliations, setReconciliations] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
@@ -60,7 +62,7 @@ const History = () => {
   if (loading) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <p className="text-muted-foreground">Loading history...</p>
+        <p className="text-muted-foreground">{t('loadingHistory')}</p>
       </div>
     );
   }
@@ -74,21 +76,21 @@ const History = () => {
           </button>
           <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
             <ArrowLeft className="w-4 h-4 mr-1" />
-            New reconciliation
+            {t('newReconciliation')}
           </Button>
         </div>
       </div>
 
       <div className="container mx-auto px-6 py-12 max-w-4xl">
-        <h1 className="text-2xl font-semibold mb-2">Reconciliation History</h1>
+        <h1 className="text-2xl font-semibold mb-2">{t('reconciliationHistory')}</h1>
         <p className="text-muted-foreground mb-8">
-          View your previous reconciliations and results.
+          {t('historyDesc')}
         </p>
 
         {reconciliations.length === 0 ? (
           <div className="bg-surface-elevated border rounded-xl p-12 text-center">
             <Clock className="w-12 h-12 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-lg font-medium mb-2">No reconciliations yet</h3>
+            <h3 className="text-lg font-medium mb-2">{t('noHistory')}</h3>
             <p className="text-sm text-muted-foreground mb-6">
               Start by uploading your first bank statement and provider export.
             </p>

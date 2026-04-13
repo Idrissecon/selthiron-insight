@@ -4,6 +4,7 @@ import { CheckCircle2, XCircle, AlertTriangle, ArrowLeft, Download, Shield, X } 
 import logo from "@/assets/selthiron-logo.png";
 import type { ReconciliationReport, MatchResult } from "@/lib/reconciliation";
 import { useAuth } from "@/contexts/AuthContext";
+import { useTranslation } from "react-i18next";
 import { useEffect, useState } from "react";
 
 const statusConfig = {
@@ -13,9 +14,10 @@ const statusConfig = {
 };
 
 const Results = () => {
-  const location = useLocation();
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated } = useAuth();
+  const { t } = useTranslation();
   const report = location.state?.report as ReconciliationReport | undefined;
   const [showLoginModal, setShowLoginModal] = useState(false);
 
@@ -67,17 +69,25 @@ const Results = () => {
           <div className="flex items-center gap-3">
             {!isAuthenticated && (
               <Button
-                variant="outline"
-                size="sm"
-                onClick={() => navigate("/access", { state: { report } })}
+                variant="ghost"
+                size="icon"
+                className="h-8 w-8 absolute top-4 right-4"
+                onClick={() => setShowLoginModal(false)}
               >
-                <Shield className="w-4 h-4 mr-2" />
-                Sign in
+                <X className="w-4 h-4" />
               </Button>
             )}
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={() => navigate("/access", { state: { report } })}
+            >
+              <Shield className="w-4 h-4 mr-2" />
+              {t('signIn')}
+            </Button>
             <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
-              <ArrowLeft className="w-4 h-4 mr-1" />
-              New reconciliation
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              {t('newReconciliation')}
             </Button>
           </div>
         </div>
@@ -86,27 +96,25 @@ const Results = () => {
       <div className="container mx-auto px-6 py-12 max-w-4xl">
         <div className="flex items-center justify-between mb-8">
           <div>
-            <h1 className="text-2xl font-semibold mb-1">Reconciliation Report</h1>
-            <p className="text-sm text-muted-foreground">
-              {report.totalBank} bank transactions · {report.totalProvider} provider transactions
-            </p>
+            <h1 className="text-2xl font-semibold mb-2">{t('reconciliationResults')}</h1>
+            <p className="text-sm text-muted-foreground">{t('totalBank')} {report.totalBank} bank transactions · {report.totalProvider} provider transactions</p>
           </div>
           <Button variant="outline" size="sm" onClick={exportCSV}>
             <Download className="w-4 h-4 mr-1" />
-            Export CSV
+            {t('downloadCSV')}
           </Button>
         </div>
 
         {/* Summary Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10">
           <SummaryCard
-            label="Match Rate"
+            label={t('matchRate')}
             value={`${report.matchRate?.toFixed(0) || 0}%`}
             className="text-success"
           />
-          <SummaryCard label="Matched" value={report.matched || 0} className="text-success" />
-          <SummaryCard label="Unmatched" value={report.unmatched || 0} className="text-destructive" />
-          <SummaryCard label="Discrepancies" value={report.discrepancies || 0} className="text-warning" />
+          <SummaryCard label={t('matched')} value={report.matched || 0} className="text-success" />
+          <SummaryCard label={t('unmatched')} value={report.unmatched || 0} className="text-destructive" />
+          <SummaryCard label={t('discrepancies')} value={report.discrepancies || 0} className="text-warning" />
         </div>
 
         {/* Results Table */}
@@ -127,13 +135,9 @@ const Results = () => {
 
         <div className="mt-8 text-center">
           {isAuthenticated ? (
-            <p className="text-xs text-muted-foreground">
-              This reconciliation has been saved to your account history.
-            </p>
+            <p className="text-xs text-muted-foreground">{t('reconciliationSaved')}</p>
           ) : (
-            <p className="text-xs text-muted-foreground">
-              Sign in to save this reconciliation to your history.
-            </p>
+            <p className="text-xs text-muted-foreground">{t('signInToSaveDesc')}</p>
           )}
         </div>
       </div>
@@ -143,7 +147,7 @@ const Results = () => {
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
           <div className="bg-background border rounded-xl p-6 max-w-md w-full shadow-lg">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold">Save your reconciliation</h3>
+              <h2 className="text-lg font-semibold mb-4">{t('summary')}</h2>
               <button
                 onClick={() => setShowLoginModal(false)}
                 className="text-muted-foreground hover:text-foreground transition-colors"
@@ -151,15 +155,13 @@ const Results = () => {
                 <X className="w-5 h-5" />
               </button>
             </div>
-            <p className="text-sm text-muted-foreground mb-6">
-              Sign in to save this reconciliation to your history and access it later.
-            </p>
+            <p className="text-sm text-muted-foreground mb-6">{t('heroSubtitle')}</p>
             <Button
               className="w-full"
-              onClick={() => navigate("/access")}
+              onClick={() => navigate("/access", { state: { report } })}
             >
               <Shield className="w-4 h-4 mr-2" />
-              Sign in to save
+              {t('signInToSave')}
             </Button>
           </div>
         </div>
