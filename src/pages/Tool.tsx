@@ -57,8 +57,10 @@ const Tool = () => {
       try {
         const expiresAt = new Date(Date.now() + 16 * 60 * 1000).toISOString(); // 16 minutes from now (margin for network delay)
 
-        // Save session_id to localStorage for later assignment
-        localStorage.setItem('pending_result_session_id', sessionId);
+        // Only save session_id to localStorage if not authenticated
+        if (!isAuthenticated) {
+          localStorage.setItem('pending_result_session_id', sessionId);
+        }
 
         // Save reconciliation results to database
         const { error: recError } = await supabase
