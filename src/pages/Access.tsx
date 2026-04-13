@@ -6,13 +6,12 @@ import { Shield, Mail, Lock, User } from "lucide-react";
 import logo from "@/assets/selthiron-logo.png";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabase";
-import type { ReconciliationReport } from "@/lib/reconciliation";
 
 const Access = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { login, signup, user } = useAuth();
-  const report = location.state?.report as ReconciliationReport | undefined;
+  const { login, signup } = useAuth();
+  const report = location.state?.report as any;
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,27 +29,6 @@ const Access = () => {
         await login(email, password);
       } else {
         await signup(email, password, name);
-      }
-
-      // Get the current session to get the user
-      const { data: { session } } = await supabase.auth.getSession();
-      const currentUser = session?.user;
-
-      // Assign unassigned reports to the user using session_id from localStorage
-      if (currentUser) {
-        const pendingSessionId = localStorage.getItem('pending_report_session_id');
-        if (pendingSessionId) {
-          try {
-            await supabase.rpc('assign_reports_to_user', { 
-              user_uuid: currentUser.id,
-              session_id_param: pendingSessionId
-            });
-            // Clear localStorage after assignment
-            localStorage.removeItem('pending_report_session_id');
-          } catch (err) {
-            console.error("Failed to assign reports:", err);
-          }
-        }
       }
 
       // Navigate to Results if there's a report, otherwise to Tool

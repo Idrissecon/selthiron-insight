@@ -16,9 +16,6 @@ const Tool = () => {
   const [error, setError] = useState("");
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
 
-  // Generate session ID for tracking unassigned reports
-  const sessionId = crypto.randomUUID();
-
   const handleDrop = useCallback(
     (setter: (f: File) => void) => (e: React.DragEvent) => {
       e.preventDefault();
@@ -53,68 +50,61 @@ const Tool = () => {
 
       const report = reconcile(bankTxs, providerTxs);
 
-      // Save to Supabase always
-      try {
-        const expiresAt = new Date(Date.now() + 20 * 60 * 1000).toISOString(); // 20 minutes from now
+      // Save to Supabase if authenticated
+      if (isAuthenticated && user) {
+        try {
+          // Save files to database
+          const { data: bankFileData, error: bankError } = await supabase
+            .from('files')
+            .insert({
+              filename: bankFile.name,
+              type: 'bank',
+              content: bankText,
+              user_id: user.id,
+            })
+            .select()
+            .single();
 
-        // Save session_id to localStorage for later assignment
-        localStorage.setItem('pending_report_session_id', sessionId);
+          if (bankError) throw bankError;
 
-        // Save files to database
-        const { data: bankFileData, error: bankError } = await supabase
-          .from('files')
-          .insert({
-            filename: bankFile.name,
-            type: 'bank',
-            content: bankText,
-            user_id: isAuthenticated && user ? user.id : null,
-            session_id: sessionId,
-          })
-          .select()
-          .single();
+          const { data: providerFileData, error: providerError } = await supabase
+            .from('files')
+            .insert({
+              filename: providerFile.name,
+              type: 'provider',
+              content: providerText,
+              user_id: user.id,
+            })
+            .select()
+            .single();
 
-        if (bankError) throw bankError;
+          if (providerError) throw providerError;
 
-        const { data: providerFileData, error: providerError } = await supabase
-          .from('files')
-          .insert({
-            filename: providerFile.name,
-            type: 'provider',
-            content: providerText,
-            user_id: isAuthenticated && user ? user.id : null,
-            session_id: sessionId,
-          })
-          .select()
-          .single();
+          // Save reconciliation results to database
+          const { error: recError } = await supabase
+            .from('reconciliations')
+            .insert({
+              total_bank: report.totalBank,
+              total_provider: report.totalProvider,
+              matched: report.matched,
+              unmatched: report.unmatched,
+              discrepancies: report.discrepancies,
+              match_rate: report.matchRate,
+              reconcilable_bank: report.reconcilableBank,
+              reconcilable_provider: report.reconcilableProvider,
+              results: report.results,
+              user_id: user.id,
+            });
 
-        if (providerError) throw providerError;
-
-        // Save reconciliation results to database
-        const { error: recError } = await supabase
-          .from('reconciliations')
-          .insert({
-            total_bank: report.totalBank,
-            total_provider: report.totalProvider,
-            matched: report.matched,
-            unmatched: report.unmatched,
-            discrepancies: report.discrepancies,
-            match_rate: report.matchRate,
-            reconcilable_bank: report.reconcilableBank,
-            reconcilable_provider: report.reconcilableProvider,
-            results: report.results,
-            user_id: isAuthenticated && user ? user.id : null,
-            session_id: sessionId,
-            expires_at: isAuthenticated ? null : expiresAt,
-          });
-
-        if (recError) throw recError;
-      } catch (err) {
-        // If saving fails, continue to results anyway
-        console.error("Failed to save to Supabase:", err);
+          if (recError) throw recError;
+        } catch (err) {
+          // If saving fails, continue to results anyway
+          console.error("Failed to save to Supabase:", err);
+        }
       }
 
       // Navigate to results
-      navigate("/results", { state: { report, sessionId } });
+      navigate("/results", { state: { report } });
     } catch (err) {
       setError(err instanceof Error ? err.message : "Upload failed");
     } finally {

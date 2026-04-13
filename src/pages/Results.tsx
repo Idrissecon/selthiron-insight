@@ -70,7 +70,7 @@ const Results = () => {
                 onClick={() => navigate("/access", { state: { report } })}
               >
                 <Shield className="w-4 h-4 mr-2" />
-                Sign in to save
+                Sign in
               </Button>
             )}
             <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
@@ -130,7 +130,7 @@ const Results = () => {
             </p>
           ) : (
             <p className="text-xs text-muted-foreground">
-              Your reconciliation is ready. Sign in to save it to your history.
+              Sign in to save future reconciliations to your history.
             </p>
           )}
         </div>
