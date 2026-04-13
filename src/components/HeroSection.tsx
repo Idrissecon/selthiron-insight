@@ -14,7 +14,7 @@ const HeroSection = () => {
         </p>
         <div className="mt-10 animate-fade-up [animation-delay:200ms] opacity-0">
           <Button variant="hero" size="xl" asChild>
-            <Link to="/access">Get a free reconciliation</Link>
+            <Link to="/tool">Get a free reconciliation</Link>
           </Button>
         </div>
         <div className="mt-6 flex items-center justify-center gap-2 text-sm text-muted-foreground animate-fade-up [animation-delay:300ms] opacity-0">
