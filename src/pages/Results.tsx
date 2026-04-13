@@ -68,23 +68,25 @@ const Results = () => {
           </button>
           <div className="flex items-center gap-3">
             {!isAuthenticated && (
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-8 w-8 absolute top-4 right-4"
-                onClick={() => setShowLoginModal(false)}
-              >
-                <X className="w-4 h-4" />
-              </Button>
+              <>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="h-8 w-8 absolute top-4 right-4"
+                  onClick={() => setShowLoginModal(false)}
+                >
+                  <X className="w-4 h-4" />
+                </Button>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => navigate("/access", { state: { report } })}
+                >
+                  <Shield className="w-4 h-4 mr-2" />
+                  {t('common.signIn')}
+                </Button>
+              </>
             )}
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => navigate("/access", { state: { report } })}
-            >
-              <Shield className="w-4 h-4 mr-2" />
-              {t('common.signIn')}
-            </Button>
             <Button variant="ghost" size="sm" onClick={() => navigate("/tool")}>
               <ArrowLeft className="w-4 h-4 mr-2" />
               {t('results.newReconciliation')}
@@ -97,7 +99,7 @@ const Results = () => {
         <div className="flex items-center justify-between mb-8">
           <div>
             <h1 className="text-2xl font-semibold mb-2">{t('results.title')}</h1>
-            <p className="text-sm text-muted-foreground">{t('results.totalBank')} {report.totalBank} {t('results.bankTransactions')} · {report.totalProvider} {t('results.providerTransactions')}</p>
+            <p className="text-sm text-muted-foreground">{t('results.totalBank')}: {report.totalBank} · {t('results.totalProvider')}: {report.totalProvider}</p>
           </div>
           <Button variant="outline" size="sm" onClick={exportCSV}>
             <Download className="w-4 h-4 mr-1" />

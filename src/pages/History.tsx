@@ -116,10 +116,10 @@ const History = () => {
                     </div>
                     <div>
                       <p className="font-medium">
-                        {new Date(rec.created_at).toLocaleDateString()} at {new Date(rec.created_at).toLocaleTimeString()}
+                        {new Date(rec.created_at).toLocaleDateString()} {t('history.at')} {new Date(rec.created_at).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}
                       </p>
                       <p className="text-xs text-muted-foreground">
-                        {rec.files?.length || 0} files
+                        {rec.files?.length || 0} {t('history.files')}
                       </p>
                     </div>
                   </div>
@@ -129,13 +129,13 @@ const History = () => {
                     onClick={() => viewReconciliation(rec.id)}
                   >
                     <Eye className="w-4 h-4 mr-1" />
-                    View
+                    {t('history.view')}
                   </Button>
                 </div>
 
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div>
-                    <p className="text-muted-foreground text-xs">Match Rate</p>
+                    <p className="text-muted-foreground text-xs">{t('history.matchRate')}</p>
                     <p className={`font-semibold ${
                       rec.match_rate >= 80 ? 'text-success' :
                       rec.match_rate >= 50 ? 'text-warning' :
@@ -145,15 +145,15 @@ const History = () => {
                     </p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground text-xs">Matched</p>
+                    <p className="text-muted-foreground text-xs">{t('history.matched')}</p>
                     <p className="font-semibold">{rec.matched || 0}</p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground text-xs">Unmatched</p>
+                    <p className="text-muted-foreground text-xs">{t('history.unmatched')}</p>
                     <p className="font-semibold text-destructive">{rec.unmatched || 0}</p>
                   </div>
                   <div>
-                    <p className="text-muted-foreground text-xs">Discrepancies</p>
+                    <p className="text-muted-foreground text-xs">{t('history.discrepancies')}</p>
                     <p className="font-semibold text-warning">{rec.discrepancies || 0}</p>
                   </div>
                 </div>

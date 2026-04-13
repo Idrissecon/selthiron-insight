@@ -148,7 +148,14 @@
     "startFirst": "Start your first reconciliation to see it here.",
     "loadingHistory": "Loading history...",
     "startReconciliation": "Start reconciliation",
-    "emptyStateMessage": "Start by uploading your first bank statement and provider export."
+    "emptyStateMessage": "Start by uploading your first bank statement and provider export.",
+    "at": "at",
+    "files": "files",
+    "view": "View",
+    "matchRate": "Match Rate",
+    "matched": "Matched",
+    "unmatched": "Unmatched",
+    "discrepancies": "Discrepancies"
   },
   "footer": {
     "copyright": "Privacy-first financial reconciliation."

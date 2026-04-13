@@ -148,7 +148,14 @@
     "startFirst": "Inicie su primera conciliación para verlo aquí.",
     "loadingHistory": "Cargando historial...",
     "startReconciliation": "Iniciar conciliación",
-    "emptyStateMessage": "Comience cargando su primer estado bancario y exportación de proveedor."
+    "emptyStateMessage": "Comience cargando su primer estado bancario y exportación de proveedor.",
+    "at": "a las",
+    "files": "archivos",
+    "view": "Ver",
+    "matchRate": "Tasa de Coincidencia",
+    "matched": "Coincidentes",
+    "unmatched": "No Coincidentes",
+    "discrepancies": "Discrepancias"
   },
   "footer": {
     "copyright": "Conciliación financiera con privacidad primero."
