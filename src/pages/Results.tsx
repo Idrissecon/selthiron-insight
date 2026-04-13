@@ -130,7 +130,7 @@ const Results = () => {
             </p>
           ) : (
             <p className="text-xs text-muted-foreground">
-              Sign in to save future reconciliations to your history.
+              Sign in to save this reconciliation to your history.
             </p>
           )}
         </div>

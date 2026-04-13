@@ -58,6 +58,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const logout = async () => {
+    // Cleanup expired results before logout
+    try {
+      await supabase.rpc('cleanup_expired_results');
+    } catch (err) {
+      console.error("Failed to cleanup expired results:", err);
+    }
+
     const { error } = await supabase.auth.signOut();
     if (error) throw error;
   };

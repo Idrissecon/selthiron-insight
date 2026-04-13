@@ -31,6 +31,27 @@ const Access = () => {
         await signup(email, password, name);
       }
 
+      // Get the current session to get the user
+      const { data: { session } } = await supabase.auth.getSession();
+      const currentUser = session?.user;
+
+      // Assign unassigned results to the user using session_id from localStorage
+      if (currentUser) {
+        const pendingSessionId = localStorage.getItem('pending_result_session_id');
+        if (pendingSessionId) {
+          try {
+            await supabase.rpc('assign_results_to_user', { 
+              user_uuid: currentUser.id,
+              session_id_param: pendingSessionId
+            });
+            // Clear localStorage after assignment
+            localStorage.removeItem('pending_result_session_id');
+          } catch (err) {
+            console.error("Failed to assign results:", err);
+          }
+        }
+      }
+
       // Navigate to Results if there's a report, otherwise to Tool
       if (report) {
         navigate("/results", { state: { report } });
