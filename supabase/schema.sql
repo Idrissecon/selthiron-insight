@@ -25,8 +25,15 @@ CREATE TABLE IF NOT EXISTS public.reconciliations (
   user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
   session_id UUID, -- For temporary tracking (cryptographically secure)
   expires_at TIMESTAMP WITH TIME ZONE, -- For auto-deletion of unassigned results
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW())
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT TIMEZONE('utc', NOW()),
+  CONSTRAINT exactly_one_identifier CHECK (
+    (user_id IS NOT NULL AND session_id IS NULL) OR
+    (user_id IS NULL AND session_id IS NOT NULL)
+  )
 );
+
+-- Index on session_id for performance
+CREATE INDEX IF NOT EXISTS idx_reconciliations_session_id ON public.reconciliations(session_id);
 
 -- Enable Row Level Security
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
@@ -45,6 +52,9 @@ CREATE POLICY "Users can insert own profile" ON public.profiles
 -- RLS Policies for reconciliations
 CREATE POLICY "Users can view own reconciliations" ON public.reconciliations
   FOR SELECT USING (auth.uid() = user_id);
+
+CREATE POLICY "Anonymous users can view own reconciliations by session_id" ON public.reconciliations
+  FOR SELECT USING (auth.uid() IS NULL AND session_id IS NOT NULL);
 
 CREATE POLICY "Users can insert own reconciliations" ON public.reconciliations
   FOR INSERT WITH CHECK (auth.uid() = user_id OR user_id IS NULL);
