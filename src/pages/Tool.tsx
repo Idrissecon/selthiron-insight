@@ -55,7 +55,12 @@ const Tool = () => {
 
       // Save results to Supabase (always, but with session_id if not authenticated)
       try {
-        const expiresAt = new Date(Date.now() + 20 * 60 * 1000).toISOString(); // 20 minutes from now
+        const expiresAt = new Date(Date.now() + 15 * 60 * 1000).toISOString(); // 15 minutes from now
+
+        // Backend validation: ensure session_id is valid for anonymous users
+        if (!isAuthenticated && !sessionId) {
+          throw new Error("Session ID is required for anonymous reconciliations");
+        }
 
         // Save session_id to localStorage for later assignment
         localStorage.setItem('pending_result_session_id', sessionId);
@@ -74,7 +79,7 @@ const Tool = () => {
             reconcilable_provider: report.reconcilableProvider,
             results: report.results,
             user_id: isAuthenticated && user ? user.id : null,
-            session_id: sessionId,
+            session_id: isAuthenticated ? null : sessionId,
             expires_at: isAuthenticated ? null : expiresAt,
           });
 

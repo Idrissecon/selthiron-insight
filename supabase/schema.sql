@@ -35,6 +35,9 @@ CREATE TABLE IF NOT EXISTS public.reconciliations (
 -- Partial index on session_id for unassigned results (performance optimization)
 CREATE INDEX IF NOT EXISTS idx_reconciliations_session_id_unassigned ON public.reconciliations(session_id) WHERE user_id IS NULL;
 
+-- Index on user_id for future optimization (can be added without downtime)
+CREATE INDEX IF NOT EXISTS idx_reconciliations_user_id ON public.reconciliations(user_id);
+
 -- Enable Row Level Security
 ALTER TABLE public.profiles ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.reconciliations ENABLE ROW LEVEL SECURITY;

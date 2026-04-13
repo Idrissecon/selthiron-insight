@@ -35,12 +35,12 @@ const Access = () => {
       const { data: { session } } = await supabase.auth.getSession();
       const currentUser = session?.user;
 
-      // Assign unassigned results to the user using session_id from localStorage
+      // Always execute assign_results_to_user on authentication to clean up session_id and expires_at
       if (currentUser) {
         const pendingSessionId = localStorage.getItem('pending_result_session_id');
         if (pendingSessionId) {
           try {
-            await supabase.rpc('assign_results_to_user', { 
+            await supabase.rpc('assign_results_to_user', {
               user_uuid: currentUser.id,
               session_id_param: pendingSessionId
             });
@@ -48,6 +48,7 @@ const Access = () => {
             localStorage.removeItem('pending_result_session_id');
           } catch (err) {
             console.error("Failed to assign results:", err);
+            // Continue anyway - don't block login flow
           }
         }
       }
