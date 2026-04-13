@@ -107,7 +107,7 @@ CREATE TRIGGER handle_profiles_updated_at
   FOR EACH ROW EXECUTE FUNCTION public.handle_updated_at();
 
 -- Function to assign unassigned reports to user on authentication
-CREATE OR REPLACE FUNCTION public.assign_reports_to_user(user_uuid UUID)
+CREATE OR REPLACE FUNCTION public.assign_reports_to_user(user_uuid UUID, session_id_param TEXT)
 RETURNS VOID AS $$
 BEGIN
   -- Update unassigned reconciliations with matching session_id
@@ -116,26 +116,14 @@ BEGIN
       session_id = NULL,
       expires_at = NULL
   WHERE user_id IS NULL
-    AND session_id IN (
-      SELECT DISTINCT session_id
-      FROM public.reconciliations
-      WHERE user_id IS NULL
-      ORDER BY created_at DESC
-      LIMIT 1
-    );
+    AND session_id = session_id_param;
 
   -- Update unassigned files with matching session_id
   UPDATE public.files
   SET user_id = user_uuid,
       session_id = NULL
   WHERE user_id IS NULL
-    AND session_id IN (
-      SELECT DISTINCT session_id
-      FROM public.reconciliations
-      WHERE user_id IS NULL
-      ORDER BY created_at DESC
-      LIMIT 1
-    );
+    AND session_id = session_id_param;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 

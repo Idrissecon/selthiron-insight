@@ -36,12 +36,20 @@ const Access = () => {
       const { data: { session } } = await supabase.auth.getSession();
       const currentUser = session?.user;
 
-      // Assign unassigned reports to the user
+      // Assign unassigned reports to the user using session_id from localStorage
       if (currentUser) {
-        try {
-          await supabase.rpc('assign_reports_to_user', { user_uuid: currentUser.id });
-        } catch (err) {
-          console.error("Failed to assign reports:", err);
+        const pendingSessionId = localStorage.getItem('pending_report_session_id');
+        if (pendingSessionId) {
+          try {
+            await supabase.rpc('assign_reports_to_user', { 
+              user_uuid: currentUser.id,
+              session_id_param: pendingSessionId
+            });
+            // Clear localStorage after assignment
+            localStorage.removeItem('pending_report_session_id');
+          } catch (err) {
+            console.error("Failed to assign reports:", err);
+          }
         }
       }
 

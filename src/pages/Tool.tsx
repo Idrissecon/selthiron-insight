@@ -57,6 +57,9 @@ const Tool = () => {
       try {
         const expiresAt = new Date(Date.now() + 20 * 60 * 1000).toISOString(); // 20 minutes from now
 
+        // Save session_id to localStorage for later assignment
+        localStorage.setItem('pending_report_session_id', sessionId);
+
         // Save files to database
         const { data: bankFileData, error: bankError } = await supabase
           .from('files')
