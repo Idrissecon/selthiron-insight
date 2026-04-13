@@ -1,24 +1,27 @@
 import { Clock, AlertTriangle, Search } from "lucide-react";
-
-const problems = [
-  {
-    icon: Clock,
-    title: "Manual reconciliation is slow",
-    description: "Hours spent cross-referencing bank statements with payment provider exports, line by line.",
-  },
-  {
-    icon: AlertTriangle,
-    title: "Spreadsheets cause errors",
-    description: "Copy-paste mistakes, wrong formulas, and missed transactions lead to costly discrepancies.",
-  },
-  {
-    icon: Search,
-    title: "Hard to track mismatches",
-    description: "Finding which transactions don't match across systems is like searching for a needle in a haystack.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const ProblemSection = () => {
+  const { t } = useTranslation();
+
+  const problems = [
+    {
+      icon: Clock,
+      title: t('problem1Title'),
+      description: t('problem1Desc'),
+    },
+    {
+      icon: AlertTriangle,
+      title: t('problem2Title'),
+      description: t('problem2Desc'),
+    },
+    {
+      icon: Search,
+      title: t('problem3Title'),
+      description: t('problem3Desc'),
+    },
+  ];
+
   return (
     <section className="py-20 bg-surface">
       <div className="container mx-auto px-6">

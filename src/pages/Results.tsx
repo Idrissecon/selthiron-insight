@@ -120,11 +120,11 @@ const Results = () => {
         {/* Results Table */}
         <div className="bg-surface-elevated border rounded-xl overflow-hidden shadow-sm">
           <div className="hidden md:grid grid-cols-[100px_1fr_110px_110px_100px] gap-4 px-6 py-3 text-xs font-semibold text-muted-foreground uppercase tracking-wider border-b bg-surface">
-            <span>Date</span>
-            <span>Description</span>
-            <span className="text-right">Amount</span>
-            <span className="text-right">Provider</span>
-            <span className="text-right">Status</span>
+            <span>{t('date')}</span>
+            <span>{t('description')}</span>
+            <span className="text-right">{t('amount')}</span>
+            <span className="text-right">{t('provider')}</span>
+            <span className="text-right">{t('status')}</span>
           </div>
           <div className="divide-y max-h-[500px] overflow-y-auto">
             {report.results.map((r, i) => (

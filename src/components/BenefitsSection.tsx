@@ -1,13 +1,16 @@
 import { Zap, ShieldCheck, Eye, Settings } from "lucide-react";
-
-const benefits = [
-  { icon: Zap, title: "Save hours", description: "What used to take half a day now takes minutes." },
-  { icon: ShieldCheck, title: "Reduce errors", description: "Automated matching eliminates human mistakes." },
-  { icon: Eye, title: "Instant clarity", description: "See exactly which transactions match and which don't." },
-  { icon: Settings, title: "No setup", description: "No integrations, no onboarding. Just upload and go." },
-];
+import { useTranslation } from "react-i18next";
 
 const BenefitsSection = () => {
+  const { t } = useTranslation();
+
+  const benefits = [
+    { icon: Zap, title: t('benefit1Title'), description: t('benefit1Desc') },
+    { icon: ShieldCheck, title: t('benefit2Title'), description: t('benefit2Desc') },
+    { icon: Eye, title: t('benefit3Title'), description: t('benefit3Desc') },
+    { icon: Settings, title: t('benefit4Title'), description: t('benefit4Desc') },
+  ];
+
   return (
     <section className="py-20 bg-surface">
       <div className="container mx-auto px-6">

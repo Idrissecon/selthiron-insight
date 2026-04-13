@@ -1,27 +1,30 @@
 import { Upload, GitCompareArrows, ClipboardCheck } from "lucide-react";
-
-const steps = [
-  {
-    icon: Upload,
-    step: "01",
-    title: "Upload",
-    description: "Drop your bank CSV and payment provider CSV into Selthiron.",
-  },
-  {
-    icon: GitCompareArrows,
-    step: "02",
-    title: "Match",
-    description: "Our engine normalizes and cross-references every transaction automatically.",
-  },
-  {
-    icon: ClipboardCheck,
-    step: "03",
-    title: "Review",
-    description: "See matched, unmatched, and flagged transactions in a clear report.",
-  },
-];
+import { useTranslation } from "react-i18next";
 
 const SolutionSection = () => {
+  const { t } = useTranslation();
+
+  const steps = [
+    {
+      icon: Upload,
+      step: "01",
+      title: t('solution1Title'),
+      description: t('solution1Desc'),
+    },
+    {
+      icon: GitCompareArrows,
+      step: "02",
+      title: t('solution2Title'),
+      description: t('solution2Desc'),
+    },
+    {
+      icon: ClipboardCheck,
+      step: "03",
+      title: t('solution3Title'),
+      description: t('solution3Desc'),
+    },
+  ];
+
   return (
     <section className="py-20">
       <div className="container mx-auto px-6">

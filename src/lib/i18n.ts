@@ -36,6 +36,42 @@ const resources = {
       heroSubtitle: 'Upload your files and get a clean, matched report instantly.',
       heroCTA: 'Get a free reconciliation',
       heroPrivacy: "We don't store your data. Ever.",
+
+      // ProblemSection
+      problem1Title: 'Manual reconciliation is slow',
+      problem1Desc: 'Hours spent cross-referencing bank statements with payment provider exports, line by line.',
+      problem2Title: 'Spreadsheets cause errors',
+      problem2Desc: 'Copy-paste mistakes, wrong formulas, and missed transactions lead to costly discrepancies.',
+      problem3Title: 'Hard to track mismatches',
+      problem3Desc: 'Finding which transactions don\'t match across systems is like searching for a needle in a haystack.',
+
+      // BenefitsSection
+      benefit1Title: 'Save hours',
+      benefit1Desc: 'What used to take half a day now takes minutes.',
+      benefit2Title: 'Reduce errors',
+      benefit2Desc: 'Automated matching eliminates human mistakes.',
+      benefit3Title: 'Instant clarity',
+      benefit3Desc: 'See exactly which transactions match and which don\'t.',
+      benefit4Title: 'No setup',
+      benefit4Desc: 'No integrations, no onboarding. Just upload and go.',
+
+      // SolutionSection
+      solution1Title: 'Upload',
+      solution1Desc: 'Drop your bank CSV and payment provider CSV into Selthiron.',
+      solution2Title: 'Match',
+      solution2Desc: 'Our engine normalizes and cross-references every transaction automatically.',
+      solution3Title: 'Review',
+      solution3Desc: 'See matched, unmatched, and flagged transactions in a clear report.',
+
+      // Table headers
+      date: 'Date',
+      description: 'Description',
+      amount: 'Amount',
+      provider: 'Provider',
+      status: 'Status',
+      matchedLabel: 'Matched',
+      unmatchedLabel: 'Unmatched',
+      discrepancyLabel: 'Discrepancy',
       
       // Access
       welcomeBack: 'Welcome back',
@@ -107,10 +143,46 @@ const resources = {
       getStartedButton: 'Comenzar →',
       
       // Hero
-      heroTitle: 'Reconcilia tus datos bancarios y de pagos en minutos',
+      heroTitle: 'Cuadra tus datos bancarios y de pagos en minutos',
       heroSubtitle: 'Sube tus archivos y obtén un informe limpio y conciliado al instante.',
-      heroCTA: 'Obtén una reconciliación gratuita',
+      heroCTA: 'Obtén un cuadre gratuito',
       heroPrivacy: 'No almacenamos tus datos. Nunca.',
+
+      // ProblemSection
+      problem1Title: 'El cuadre manual es lento',
+      problem1Desc: 'Horas gastadas cruzando estados bancarios con exportaciones de proveedores de pagos, línea por línea.',
+      problem2Title: 'Las hojas de cálculo causan errores',
+      problem2Desc: 'Errores de copiar y pegar, fórmulas incorrectas y transacciones perdidas llevan a discrepancias costosas.',
+      problem3Title: 'Difícil rastrear incoherencias',
+      problem3Desc: 'Encontrar qué transacciones no coinciden entre sistemas es como buscar una aguja en un pajar.',
+
+      // BenefitsSection
+      benefit1Title: 'Ahorra horas',
+      benefit1Desc: 'Lo que solía tomar medio día ahora toma minutos.',
+      benefit2Title: 'Reduce errores',
+      benefit2Desc: 'La conciliación automática elimina errores humanos.',
+      benefit3Title: 'Claridad instantánea',
+      benefit3Desc: 'Ve exactamente qué transacciones coinciden y cuáles no.',
+      benefit4Title: 'Sin configuración',
+      benefit4Desc: 'Sin integraciones, sin onboarding. Solo sube y listo.',
+
+      // SolutionSection
+      solution1Title: 'Subir',
+      solution1Desc: 'Arrastra tu CSV bancario y el CSV del proveedor de pagos a Selthiron.',
+      solution2Title: 'Cuadrar',
+      solution2Desc: 'Nuestro motor normaliza y cruza cada transacción automáticamente.',
+      solution3Title: 'Revisar',
+      solution3Desc: 'Ve transacciones cuadradas, no cuadradas y marcadas en un informe claro.',
+
+      // Table headers
+      date: 'Fecha',
+      description: 'Descripción',
+      amount: 'Monto',
+      provider: 'Proveedor',
+      status: 'Estado',
+      matchedLabel: 'Coincidente',
+      unmatchedLabel: 'No coincidente',
+      discrepancyLabel: 'Discrepancia',
       
       // Access
       welcomeBack: 'Bienvenido de nuevo',
@@ -133,16 +205,16 @@ const resources = {
       uploadProvider: 'Subir archivo de proveedor de pagos',
       bankFileLabel: 'Transacciones bancarias (CSV/Excel)',
       providerFileLabel: 'Transacciones de proveedor de pagos (CSV/Excel)',
-      reconcile: 'Reconciliar',
+      reconcile: 'Cuadrar pagos',
       noFileSelected: 'Ningún archivo seleccionado',
       uploadFile: 'Subir archivo',
       processingFiles: 'Procesando archivos...',
       privacyNotice: 'Privacidad',
-      privacyNoticeDescription: 'Tus archivos se procesan localmente. Solo se guardan los resultados de la reconciliación.',
-      bankPaymentReconciliation: 'Reconciliación Bancaria y de Pagos',
+      privacyNoticeDescription: 'Tus archivos se procesan localmente. Solo se guardan los resultados.',
+      bankPaymentReconciliation: 'Cuadrar Pagos Bancarios y de Proveedores',
       
       // Results
-      reconciliationResults: 'Resultados de Reconciliación',
+      reconciliationResults: 'Resultados del Cuadre',
       summary: 'Resumen',
       totalBank: 'Total Transacciones Bancarias',
       totalProvider: 'Total Transacciones del Proveedor',
@@ -153,21 +225,21 @@ const resources = {
       reconcilableBank: 'Bancarios Conciliables',
       reconcilableProvider: 'Proveedores Conciliables',
       downloadCSV: 'Descargar CSV',
-      newReconciliation: 'Nueva reconciliación',
+      newReconciliation: 'Nuevo cuadre',
       signInToSave: 'Inicia sesión para guardar',
-      signInToSaveDesc: 'Inicia sesión para guardar esta reconciliación en tu historial.',
+      signInToSaveDesc: 'Inicia sesión para guardar este cuadre en tu historial.',
       close: 'Cerrar',
       
       // History
-      reconciliationHistory: 'Historial de Reconciliaciones',
-      historyDesc: 'Visualiza tus reconciliaciones pasadas y descarga informes.',
-      noHistory: 'Aún no hay historial de reconciliaciones.',
-      startFirst: 'Inicia tu primera reconciliación para verla aquí.',
+      reconciliationHistory: 'Historial de Cuadres',
+      historyDesc: 'Visualiza tus cuadres pasados y descarga informes.',
+      noHistory: 'Aún no hay historial de cuadres.',
+      startFirst: 'Inicia tu primer cuadre para verlo aquí.',
       loadingHistory: 'Cargando historial...',
-      reconciliationSaved: 'Reconciliación guardada en tu historial.',
+      reconciliationSaved: 'Cuadre guardado en tu historial.',
       
       // Footer
-      copyright: 'Reconciliación financiera con privacidad primero.',
+      copyright: 'Cuadre financiero con privacidad primero.',
     }
   }
 };
